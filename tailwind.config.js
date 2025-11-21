@@ -7,6 +7,8 @@ export default {
   theme: {
     extend: {
       colors: {
+        primary: 'var(--primary-color)',
+        secondary: 'var(--secondary-color)',
         navy: {
           900: '#0a192f', // Deep navy background
           800: '#112240', // Lighter navy for cards/sections

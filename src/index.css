@@ -11,7 +11,7 @@
   }
 
   body {
-    @apply bg-slate-950 text-white antialiased selection:bg-electric-blue-500/30 selection:text-electric-blue-200;
+    @apply bg-slate-950 text-white antialiased selection:bg-electric-blue-500/30 selection:text-electric-blue-200 overflow-x-hidden;
   }
 
   h1,
