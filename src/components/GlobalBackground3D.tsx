@@ -40,35 +40,59 @@ function Scene() {
 
   const { viewport } = useThree();
 
+  // Dual-damp refs for separated physics
+  const smoothedScrollPos = useRef(0);
+  const smoothedScrollRot = useRef(0);
+  const velocity = useRef(0);
+
   useFrame((state, delta) => {
-    const t = scrollRef.current;
+    const targetT = scrollRef.current;
     
-    // Move camera along the curve
-    const point = curve.getPointAt(t);
-    const lookAtPoint = curve.getPointAt(Math.min(t + 0.01, 0.99));
+    // 1. Position Damping (Tight & Responsive)
+    // Lambda 20 ensures almost instant tracking but hides micro-jitters
+    const dampPos = THREE.MathUtils.damp(smoothedScrollPos.current, targetT, 20, delta);
     
-    // Smooth camera movement using delta time for framerate independence
-    const damp = 1 - Math.exp(-5 * delta);
+    // Calculate velocity based on the difference between frames
+    // This gives us "momentum" to use for tilt
+    const currentVelocity = (dampPos - smoothedScrollPos.current) / delta;
+    velocity.current = THREE.MathUtils.lerp(velocity.current, currentVelocity, 0.1);
     
-    // Push camera back significantly on mobile to avoid text overlap
+    smoothedScrollPos.current = dampPos;
+    
+    // 2. Rotation Damping (Cinematic & Smooth)
+    // Lambda 6 gives a heavy, high-quality camera feel
+    smoothedScrollRot.current = THREE.MathUtils.damp(smoothedScrollRot.current, targetT, 6, delta);
+
+    const tPos = smoothedScrollPos.current;
+    const tRot = smoothedScrollRot.current;
+    
+    // Move camera along the curve (Position driven by tight damp)
+    const point = curve.getPointAt(tPos);
+    
+    // LookAt target (Driven by smooth damp for cinematic turns)
+    const lookAtPoint = curve.getPointAt(Math.min(tRot + 0.01, 0.99));
+    
+    // Push camera back significantly on mobile
     const targetPos = new THREE.Vector3(point.x, point.y + 1, point.z + (isMobile ? 14 : 6)); 
-    state.camera.position.lerp(targetPos, damp);
     
-    const currentLookAt = new THREE.Vector3();
-    state.camera.getWorldDirection(currentLookAt).add(state.camera.position);
-    const newLookAt = currentLookAt.lerp(lookAtPoint, damp);
-    state.camera.lookAt(newLookAt);
+    state.camera.position.copy(targetPos);
+    
+    // Dynamic Tilt based on velocity
+    // Roll the camera slightly when scrolling fast
+    state.camera.rotation.z = velocity.current * -0.05;
+    
+    state.camera.lookAt(lookAtPoint);
 
     if (groupRef.current) {
-      // Rotate the entire group slightly for dynamic feel
-      groupRef.current.rotation.y = t * Math.PI * 0.2;
+      // Rotate the entire group (Driven by smooth damp)
+      groupRef.current.rotation.y = tRot * Math.PI * 0.1;
       
       // Mouse Parallax
       const mouseX = (state.mouse.x * viewport.width) / 50;
       const mouseY = (state.mouse.y * viewport.height) / 50;
       
-      groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, mouseY, 0.1);
-      groupRef.current.rotation.z = THREE.MathUtils.lerp(groupRef.current.rotation.z, mouseX, 0.1);
+      groupRef.current.rotation.x = THREE.MathUtils.damp(groupRef.current.rotation.x, mouseY, 4, delta);
+      groupRef.current.rotation.z = THREE.MathUtils.damp(groupRef.current.rotation.z, mouseX, 4, delta) + (velocity.current * 0.02);
     }
   });
 

@@ -8,6 +8,7 @@ import Projects from './components/Projects';
 import Footer from './components/Footer';
 import GlobalBackground3D from './components/GlobalBackground3D';
 import ResumeBuilder from './resume-builder/ResumeBuilder';
+import { ToolsPage } from './pages/ToolsPage';
 
 function Portfolio() {
   return (
@@ -25,11 +26,18 @@ function Portfolio() {
   );
 }
 
+import { AppLayout } from './layouts/AppLayout';
+
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Portfolio />} />
-      <Route path="/resume-builder/*" element={<ResumeBuilder />} />
+      
+      {/* App Platform Routes */}
+      <Route element={<AppLayout />}>
+        <Route path="/tools/*" element={<ToolsPage />} />
+        <Route path="/resume-builder/*" element={<ResumeBuilder />} />
+      </Route>
     </Routes>
   );
 }

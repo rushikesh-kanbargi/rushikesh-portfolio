@@ -65,6 +65,9 @@ export default function Navbar() {
           <Link to="/resume-builder" className="px-6 py-2 glass-panel text-white rounded-full text-sm font-bold hover:bg-white/10 transition-all border border-white/10 hover:border-electric-blue-500/50">
             Resume Builder
           </Link>
+          <Link to="/tools" className="px-6 py-2 glass-panel text-white rounded-full text-sm font-bold hover:bg-white/10 transition-all border border-white/10 hover:border-electric-blue-500/50">
+            Tools
+          </Link>
           <a href="#contact" className="px-6 py-2 bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 rounded-full text-sm font-bold hover:shadow-[0_0_20px_rgba(212,175,55,0.5)] transition-all transform hover:scale-105">
             Let's Talk
           </a>
@@ -116,6 +119,13 @@ export default function Navbar() {
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Resume Builder
+                  </Link>
+                  <Link
+                    to="/tools"
+                    className="text-2xl font-display font-bold text-electric-blue-500 hover:text-white transition-colors mt-4"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Tools
                   </Link>
                 </motion.div>
               </div>

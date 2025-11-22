@@ -4,7 +4,7 @@ import { FileText, Wand2, Layout, Download, ArrowRight, Star } from 'lucide-reac
 
 export const LandingPage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="w-full bg-slate-50">
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-20 pb-32 lg:pt-32 lg:pb-40">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full z-0">
