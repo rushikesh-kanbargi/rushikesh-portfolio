@@ -37,7 +37,7 @@ export const EditorPage = () => {
       
       <div className="flex flex-1 overflow-hidden relative">
         {/* Editor Section - Hidden on mobile when preview is active */}
-        <div className={`w-full lg:w-[45%] xl:w-[40%] h-full bg-white border-r border-slate-200 shadow-sm z-10 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent ${showPreview ? 'hidden lg:block' : 'block'}`}>
+        <div className={`w-full lg:w-[50%] xl:w-[50%] h-full bg-white border-r border-slate-200 shadow-sm z-10 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent ${showPreview ? 'hidden lg:block' : 'block'}`}>
           <div className="p-4 sm:p-6 lg:p-8 max-w-3xl mx-auto pb-20 lg:pb-8">
             <Accordion>
               {activeTab === 'customize' && (

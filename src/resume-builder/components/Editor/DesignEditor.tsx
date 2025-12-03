@@ -4,6 +4,45 @@ import { type ResumeMeta } from '../../types';
 import { COLOR_PALETTES, FONT_OPTIONS } from '../../data/designOptions';
 import { Check } from 'lucide-react';
 
+interface RangeControlProps {
+  label: string;
+  value: number;
+  onChange: (value: number) => void;
+  min: number;
+  max: number;
+  step?: number;
+  unit?: string;
+}
+
+const RangeControl: React.FC<RangeControlProps> = ({ label, value, onChange, min, max, step = 1, unit = '' }) => (
+  <div className="mb-4">
+    <div className="flex justify-between mb-1">
+      <label className="text-sm font-medium text-gray-700">{label}</label>
+      <span className="text-xs text-gray-500">{value}{unit}</span>
+    </div>
+    <div className="flex items-center gap-3">
+      <input
+        type="range"
+        value={value}
+        onChange={(e) => onChange(parseFloat(e.target.value))}
+        min={min}
+        max={max}
+        step={step}
+        className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+      />
+      <input
+        type="number"
+        value={value}
+        onChange={(e) => onChange(parseFloat(e.target.value))}
+        min={min}
+        max={max}
+        step={step}
+        className="w-16 p-1 text-sm border rounded text-center"
+      />
+    </div>
+  </div>
+);
+
 export const DesignEditor: React.FC = () => {
   const { resumeData, setResumeData } = useResume();
   const { meta } = resumeData;
@@ -111,53 +150,41 @@ export const DesignEditor: React.FC = () => {
           </select>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-          <div className="form-group">
-            <label>Base Size</label>
-            <input
-              type="number"
-              value={meta.typography.fontSize}
-              onChange={(e) => updateMeta('typography', 'fontSize', parseInt(e.target.value))}
-              min={10}
-              max={18}
-            />
-          </div>
-          <div className="form-group">
-            <label>Line Height</label>
-            <input
-              type="number"
-              value={meta.typography.lineHeight}
-              onChange={(e) => updateMeta('typography', 'lineHeight', parseFloat(e.target.value))}
-              min={1}
-              max={2}
-              step={0.1}
-            />
-          </div>
-        </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-          <div className="form-group">
-            <label>Name Size</label>
-            <input
-              type="number"
-              value={meta.typography.nameSize}
-              onChange={(e) => updateMeta('typography', 'nameSize', parseFloat(e.target.value))}
-              min={1.5}
-              max={4}
-              step={0.1}
-            />
-          </div>
-          <div className="form-group">
-            <label>Heading Size</label>
-            <input
-              type="number"
-              value={meta.typography.headingSize}
-              onChange={(e) => updateMeta('typography', 'headingSize', parseFloat(e.target.value))}
-              min={1}
-              max={2}
-              step={0.1}
-            />
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <RangeControl
+            label="Base Size"
+            value={meta.typography.fontSize}
+            onChange={(val) => updateMeta('typography', 'fontSize', val)}
+            min={10}
+            max={24}
+            unit="px"
+          />
+          <RangeControl
+            label="Line Height"
+            value={meta.typography.lineHeight}
+            onChange={(val) => updateMeta('typography', 'lineHeight', val)}
+            min={1}
+            max={2}
+            step={0.1}
+          />
+          <RangeControl
+            label="Name Size"
+            value={meta.typography.nameSize}
+            onChange={(val) => updateMeta('typography', 'nameSize', val)}
+            min={1.5}
+            max={5}
+            step={0.1}
+            unit="em"
+          />
+          <RangeControl
+            label="Heading Size"
+            value={meta.typography.headingSize}
+            onChange={(val) => updateMeta('typography', 'headingSize', val)}
+            min={1}
+            max={3}
+            step={0.1}
+            unit="em"
+          />
         </div>
       </div>
 
@@ -265,79 +292,61 @@ export const DesignEditor: React.FC = () => {
         
         <div className="form-group">
           <label className="block text-sm font-medium text-gray-700 mb-2">Page Margins (mm)</label>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="text-xs text-gray-500">Top</label>
-              <input
-                type="number"
-                value={meta.spacing.marginTop}
-                onChange={(e) => updateMeta('spacing', 'marginTop', parseInt(e.target.value))}
-                min={0}
-                max={50}
-                className="w-full p-2 border rounded"
-              />
-            </div>
-            <div>
-              <label className="text-xs text-gray-500">Bottom</label>
-              <input
-                type="number"
-                value={meta.spacing.marginBottom}
-                onChange={(e) => updateMeta('spacing', 'marginBottom', parseInt(e.target.value))}
-                min={0}
-                max={50}
-                className="w-full p-2 border rounded"
-              />
-            </div>
-            <div>
-              <label className="text-xs text-gray-500">Left</label>
-              <input
-                type="number"
-                value={meta.spacing.marginLeft}
-                onChange={(e) => updateMeta('spacing', 'marginLeft', parseInt(e.target.value))}
-                min={0}
-                max={50}
-                className="w-full p-2 border rounded"
-              />
-            </div>
-            <div>
-              <label className="text-xs text-gray-500">Right</label>
-              <input
-                type="number"
-                value={meta.spacing.marginRight}
-                onChange={(e) => updateMeta('spacing', 'marginRight', parseInt(e.target.value))}
-                min={0}
-                max={50}
-                className="w-full p-2 border rounded"
-              />
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <RangeControl
+              label="Top"
+              value={meta.spacing.marginTop}
+              onChange={(val) => updateMeta('spacing', 'marginTop', val)}
+              min={0}
+              max={50}
+              unit="mm"
+            />
+            <RangeControl
+              label="Bottom"
+              value={meta.spacing.marginBottom}
+              onChange={(val) => updateMeta('spacing', 'marginBottom', val)}
+              min={0}
+              max={50}
+              unit="mm"
+            />
+            <RangeControl
+              label="Left"
+              value={meta.spacing.marginLeft}
+              onChange={(val) => updateMeta('spacing', 'marginLeft', val)}
+              min={0}
+              max={50}
+              unit="mm"
+            />
+            <RangeControl
+              label="Right"
+              value={meta.spacing.marginRight}
+              onChange={(val) => updateMeta('spacing', 'marginRight', val)}
+              min={0}
+              max={50}
+              unit="mm"
+            />
           </div>
         </div>
 
-        <div className="form-group">
-          <label>Section Padding</label>
-          <input
-            type="range"
-            value={meta.spacing.sectionPadding}
-            onChange={(e) => updateMeta('spacing', 'sectionPadding', parseFloat(e.target.value))}
-            min={0.5}
-            max={3}
-            step={0.1}
-            style={{ width: '100%' }}
-          />
-        </div>
+        <RangeControl
+          label="Section Padding"
+          value={meta.spacing.sectionPadding}
+          onChange={(val) => updateMeta('spacing', 'sectionPadding', val)}
+          min={0.5}
+          max={4}
+          step={0.1}
+          unit="rem"
+        />
 
-        <div className="form-group">
-          <label>Item Spacing</label>
-          <input
-            type="range"
-            value={meta.spacing.itemSpacing}
-            onChange={(e) => updateMeta('spacing', 'itemSpacing', parseFloat(e.target.value))}
-            min={0.5}
-            max={2}
-            step={0.1}
-            style={{ width: '100%' }}
-          />
-        </div>
+        <RangeControl
+          label="Item Spacing"
+          value={meta.spacing.itemSpacing}
+          onChange={(val) => updateMeta('spacing', 'itemSpacing', val)}
+          min={0.5}
+          max={3}
+          step={0.1}
+          unit="rem"
+        />
       </div>
     </div>
   );
