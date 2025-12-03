@@ -109,7 +109,7 @@ export const EditorPage = () => {
         {/* Preview Section - Hidden on mobile when editor is active */}
         <div className={`flex-1 h-full bg-slate-600 overflow-hidden ${showPreview ? 'block' : 'hidden lg:block'}`}>
           <PreviewLayout>
-            <ResumePreview />
+            <ResumePreview key={resumeData.id || 'preview'} />
           </PreviewLayout>
         </div>
       </div>

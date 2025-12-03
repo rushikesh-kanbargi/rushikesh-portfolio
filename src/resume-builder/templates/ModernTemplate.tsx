@@ -333,9 +333,13 @@ export const ModernTemplate: React.FC = () => {
   };
 
   return (
-    <div style={styles.container}>
+    <div style={{ ...styles.container, width: '100%' }}>
       {renderHeader()}
-      {sectionsOrder.map(section => renderSection(section))}
+      {sectionsOrder && sectionsOrder.length > 0 ? (
+        sectionsOrder.map(section => renderSection(section))
+      ) : (
+        <div style={{ padding: '20px', color: '#666' }}>No sections to display</div>
+      )}
     </div>
   );
 };
