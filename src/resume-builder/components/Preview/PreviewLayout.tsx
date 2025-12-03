@@ -146,7 +146,9 @@ export const PreviewLayout: React.FC<PreviewLayoutProps> = ({ children }) => {
         enableLinks: false
       };
 
-      await html2pdf().set(opt).from(element).save();
+      // @ts-ignore
+      const worker = html2pdf().set(opt).from(element).save();
+      await worker;
       
       // Restore original styles
       printContentElement.style.transform = originalTransform;

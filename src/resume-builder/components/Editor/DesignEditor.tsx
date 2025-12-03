@@ -264,16 +264,53 @@ export const DesignEditor: React.FC = () => {
         <h3 style={{ fontSize: '0.9rem', textTransform: 'uppercase', color: '#6b7280', marginBottom: '1rem' }}>Spacing</h3>
         
         <div className="form-group">
-          <label>Page Margin (mm)</label>
-          <input
-            type="range"
-            value={meta.spacing.margin}
-            onChange={(e) => updateMeta('spacing', 'margin', parseInt(e.target.value))}
-            min={10}
-            max={40}
-            step={1}
-            style={{ width: '100%' }}
-          />
+          <label className="block text-sm font-medium text-gray-700 mb-2">Page Margins (mm)</label>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="text-xs text-gray-500">Top</label>
+              <input
+                type="number"
+                value={meta.spacing.marginTop}
+                onChange={(e) => updateMeta('spacing', 'marginTop', parseInt(e.target.value))}
+                min={0}
+                max={50}
+                className="w-full p-2 border rounded"
+              />
+            </div>
+            <div>
+              <label className="text-xs text-gray-500">Bottom</label>
+              <input
+                type="number"
+                value={meta.spacing.marginBottom}
+                onChange={(e) => updateMeta('spacing', 'marginBottom', parseInt(e.target.value))}
+                min={0}
+                max={50}
+                className="w-full p-2 border rounded"
+              />
+            </div>
+            <div>
+              <label className="text-xs text-gray-500">Left</label>
+              <input
+                type="number"
+                value={meta.spacing.marginLeft}
+                onChange={(e) => updateMeta('spacing', 'marginLeft', parseInt(e.target.value))}
+                min={0}
+                max={50}
+                className="w-full p-2 border rounded"
+              />
+            </div>
+            <div>
+              <label className="text-xs text-gray-500">Right</label>
+              <input
+                type="number"
+                value={meta.spacing.marginRight}
+                onChange={(e) => updateMeta('spacing', 'marginRight', parseInt(e.target.value))}
+                min={0}
+                max={50}
+                className="w-full p-2 border rounded"
+              />
+            </div>
+          </div>
         </div>
 
         <div className="form-group">

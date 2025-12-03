@@ -70,7 +70,11 @@ export interface ResumeMeta {
         headingSize: number; // Scale factor or px
     };
     spacing: {
-        margin: number; // Page margin in mm
+        margin: number; // Page margin in mm (Legacy)
+        marginTop: number;
+        marginBottom: number;
+        marginLeft: number;
+        marginRight: number;
         sectionPadding: number; // Spacing between sections in rem
         itemSpacing: number; // Spacing between items in rem
     };
@@ -153,7 +157,11 @@ export interface ResumeMeta {
         headingSize: number; // Scale factor or px
     };
     spacing: {
-        margin: number; // Page margin in mm
+        margin: number; // Page margin in mm (Legacy)
+        marginTop: number;
+        marginBottom: number;
+        marginLeft: number;
+        marginRight: number;
         sectionPadding: number; // Spacing between sections in rem
         itemSpacing: number; // Spacing between items in rem
     };
@@ -269,6 +277,10 @@ export const initialResumeData: ResumeData = {
         },
         spacing: {
             margin: 20,
+            marginTop: 20,
+            marginBottom: 20,
+            marginLeft: 20,
+            marginRight: 20,
             sectionPadding: 1.5,
             itemSpacing: 1,
         },
