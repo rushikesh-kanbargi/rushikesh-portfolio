@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Send, User, Bot, Sparkles, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Send, User, Bot, Sparkles, AlertCircle, Trash2 } from 'lucide-react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { useResume } from '../resume-builder/context/ResumeContext';
 
@@ -100,9 +100,14 @@ export const AskMyAI: React.FC = () => {
     }
   };
 
+  const clearChat = () => {
+    setMessages([]);
+    setError(null);
+  };
+
   const suggestedQuestions = [
     "What are your main skills?",
-    "Tell me about your experience at TechFlow.",
+    "Tell me about your experience.",
     "Do you have experience with React?",
     "What is your educational background?"
   ];
@@ -123,6 +128,16 @@ export const AskMyAI: React.FC = () => {
               <h1 className="text-2xl font-bold text-slate-900">Ask My AI</h1>
             </div>
           </div>
+          
+          {messages.length > 0 && (
+            <button
+              onClick={clearChat}
+              className="flex items-center gap-2 px-3 py-2 text-sm text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+            >
+              <Trash2 size={16} />
+              Clear Chat
+            </button>
+          )}
         </div>
 
         {!apiKey && (

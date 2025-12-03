@@ -4,7 +4,7 @@ import {
   FileJson, Regex, FileCode, Code2, ArrowRight, 
   Sparkles, Briefcase, MessageSquare, 
   Timer, CheckSquare, FileText, 
-  BookOpen, Calendar, Bot 
+  BookOpen, Bot, Calendar, Share2, Globe, GitCompare, Image as ImageIcon
 } from 'lucide-react';
 
 const devTools = [
@@ -33,13 +33,38 @@ const devTools = [
     color: 'bg-blue-500',
   },
   {
-    id: 'code-snippets',
-    name: 'Code Snippets',
-    description: 'A curated library of useful code snippets for developers.',
-    icon: Code2,
-    path: '/tools/code-snippets',
-    color: 'bg-green-500',
+    id: 'system-design',
+    name: 'System Design Board',
+    description: 'Sketch system architectures with drag-and-drop nodes.',
+    icon: Share2,
+    path: '/tools/system-design',
+    color: 'bg-pink-500',
   },
+  {
+    id: 'api-client',
+    name: 'API Client',
+    description: 'Test HTTP requests and inspect responses directly in your browser.',
+    icon: Globe,
+    path: '/tools/api-client',
+    color: 'bg-cyan-500',
+  },
+  {
+    id: 'diff-checker',
+    name: 'Diff Checker',
+    description: 'Compare text or code to spot differences instantly.',
+    icon: GitCompare,
+    path: '/tools/diff-checker',
+    color: 'bg-emerald-500',
+  },
+  {
+    id: 'image-optimizer',
+    name: 'Image Optimizer',
+    description: 'Compress and convert images locally for better web performance.',
+    icon: ImageIcon,
+    path: '/tools/image-optimizer',
+    color: 'bg-pink-500',
+  },
+
 ];
 
 const careerTools = [
@@ -102,6 +127,14 @@ const productivityTools = [
     path: '/tools/note-taker',
     color: 'bg-amber-500',
   },
+  {
+    id: 'habit-tracker',
+    name: 'Habit Tracker',
+    description: 'Build consistency with a daily habit tracking grid and streaks.',
+    icon: Calendar,
+    path: '/tools/habit-tracker',
+    color: 'bg-emerald-500',
+  },
 ];
 
 const brandingTools = [
@@ -113,14 +146,7 @@ const brandingTools = [
     path: '/tools/blog',
     color: 'bg-teal-500',
   },
-  {
-    id: 'timeline',
-    name: 'Career Timeline',
-    description: 'Visual journey of my professional experience and milestones.',
-    icon: Calendar,
-    path: '/tools/timeline',
-    color: 'bg-cyan-600',
-  },
+
   {
     id: 'ask-ai',
     name: 'Ask My AI',

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { 
   LayoutDashboard, 
@@ -13,12 +13,14 @@ import {
   CheckSquare, 
   FileText, 
   BookOpen, 
-  Calendar, 
   Bot,
   Menu,
   X,
   ChevronLeft,
-  Home
+
+  Home,
+  Search,
+  Image as ImageIcon
 } from 'lucide-react';
 
 const menuItems = [
@@ -26,6 +28,7 @@ const menuItems = [
     category: 'Overview',
     items: [
       { name: 'Dashboard', path: '/tools', icon: LayoutDashboard },
+      { name: 'All Tools', path: '/tools/catalog', icon: LayoutDashboard },
     ]
   },
   {
@@ -35,6 +38,7 @@ const menuItems = [
       { name: 'Regex Tester', path: '/tools/regex-tester', icon: Regex },
       { name: 'Markdown Editor', path: '/tools/markdown-editor', icon: FileCode },
       { name: 'Code Snippets', path: '/tools/code-snippets', icon: Code2 },
+      { name: 'Image Optimizer', path: '/tools/image-optimizer', icon: ImageIcon },
     ]
   },
   {
@@ -58,21 +62,38 @@ const menuItems = [
     category: 'Personal Branding',
     items: [
       { name: 'Tech Blog', path: '/tools/blog', icon: FileText },
-      { name: 'Timeline', path: '/tools/timeline', icon: Calendar },
+
       { name: 'Ask My AI', path: '/tools/ask-ai', icon: Bot },
     ]
   }
 ];
 
 import { ResumeProvider } from '../resume-builder/context/ResumeContext';
+import { CommandPalette } from '../components/CommandPalette';
 
 export const AppLayout: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setIsCommandPaletteOpen(prev => !prev);
+      } else if (e.key === 'Escape') {
+        setIsCommandPaletteOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   return (
     <ResumeProvider>
+      <CommandPalette isOpen={isCommandPaletteOpen} onClose={() => setIsCommandPaletteOpen(false)} />
       <div className="h-screen overflow-hidden bg-slate-50 flex text-slate-900">
         {/* Mobile Menu Overlay */}
         {isMobileMenuOpen && (
@@ -114,6 +135,30 @@ export const AppLayout: React.FC = () => {
               aria-label="Close Menu"
             >
               <X size={20} />
+            </button>
+          </div>
+
+
+
+          {/* Search Button */}
+          <div className="px-3 py-4">
+            <button
+              onClick={() => setIsCommandPaletteOpen(true)}
+              className={`
+                w-full flex items-center gap-3 px-3 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-500 rounded-lg transition-colors border border-slate-200
+                ${!isSidebarOpen && 'justify-center'}
+              `}
+            >
+              <Search size={20} />
+              {isSidebarOpen && (
+                <>
+                  <span className="text-sm font-medium">Search...</span>
+                  <div className="ml-auto flex items-center gap-1">
+                    <kbd className="px-1.5 py-0.5 bg-white border border-slate-300 rounded text-xs font-mono shadow-sm">Ctrl</kbd>
+                    <kbd className="px-1.5 py-0.5 bg-white border border-slate-300 rounded text-xs font-mono shadow-sm">K</kbd>
+                  </div>
+                </>
+              )}
             </button>
           </div>
 
