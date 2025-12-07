@@ -114,7 +114,7 @@ export const PreviewLayout: React.FC<PreviewLayoutProps> = ({ children }) => {
       
       // Use html2pdf with standard A4 format - it will automatically paginate
       const opt = {
-        margin: [0, 0, 0, 0],
+        margin: [0, 0, 0, 0] as [number, number, number, number],
         filename: `${resumeName}.pdf`,
         image: { 
           type: 'jpeg', 
