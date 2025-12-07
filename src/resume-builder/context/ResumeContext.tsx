@@ -74,7 +74,14 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
           ...initialResumeData, 
           ...parsed, 
           customSections: parsed.customSections || [],
-          meta: { ...initialResumeData.meta, ...parsed.meta }
+          meta: { 
+            ...initialResumeData.meta, 
+            ...parsed.meta,
+            spacing: {
+              ...initialResumeData.meta.spacing,
+              ...(parsed.meta?.spacing || {})
+            }
+          }
         });
         localStorage.setItem('active_resume_id', id);
       } catch (e) {

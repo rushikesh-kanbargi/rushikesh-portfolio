@@ -13,10 +13,8 @@ export const ModernTemplate: React.FC = () => {
       fontSize: `${typography.fontSize}px`,
       lineHeight: typography.lineHeight,
       color: theme.textColor,
-      paddingTop: `${spacing.marginTop}mm`,
-      paddingBottom: `${spacing.marginBottom}mm`,
-      paddingLeft: `${spacing.marginLeft}mm`,
-      paddingRight: `${spacing.marginRight}mm`,
+      // Padding handled by PreviewLayout
+      padding: 0,
     },
     header: {
       borderBottom: `2px solid ${theme.primaryColor}`,

@@ -16,10 +16,8 @@ export const ProfessionalTemplate: React.FC = () => {
       height: '100%',
       display: 'flex',
       flexDirection: (layout.sidebarPosition === 'right' ? 'row-reverse' : 'row') as React.CSSProperties['flexDirection'],
-      paddingTop: `${spacing.marginTop}mm`,
-      paddingBottom: `${spacing.marginBottom}mm`,
-      paddingLeft: `${spacing.marginLeft}mm`,
-      paddingRight: `${spacing.marginRight}mm`,
+      // Padding handled by PreviewLayout
+      padding: 0,
     },
     sidebar: {
       width: '30%',

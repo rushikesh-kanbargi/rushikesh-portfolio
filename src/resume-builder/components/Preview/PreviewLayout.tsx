@@ -23,10 +23,30 @@ export const PreviewLayout: React.FC<PreviewLayoutProps> = ({ children }) => {
   const A4_WIDTH_PX = 794; // 210mm at 96 DPI
   const A4_HEIGHT_PX = 1123; // 297mm at 96 DPI
 
+  // Get Margins from meta (default to 20mm if missing)
+  const margins = resumeData.meta?.spacing || {
+    marginTop: 20,
+    marginBottom: 20,
+    marginLeft: 20,
+    marginRight: 20
+  };
+
+  // Convert mm to px (96 DPI -> 3.7795 px/mm)
+  const pxPerMm = 3.7795;
+  const marginTopPx = margins.marginTop * pxPerMm;
+  const marginBottomPx = margins.marginBottom * pxPerMm;
+  const marginLeftPx = margins.marginLeft * pxPerMm;
+  const marginRightPx = margins.marginRight * pxPerMm;
+
+  // Calculate content area dimensions
+  const contentWidthPx = A4_WIDTH_PX - (marginLeftPx + marginRightPx);
+  const contentHeightPerPagePx = A4_HEIGHT_PX - (marginTopPx + marginBottomPx);
+
   // Measure content height and update on changes
   useEffect(() => {
     const measureContent = () => {
       if (contentWrapperRef.current) {
+        // We measure the scrollHeight of the wrapper which has constrained width
         const height = contentWrapperRef.current.scrollHeight;
         setContentHeight(height);
       }
@@ -68,53 +88,34 @@ export const PreviewLayout: React.FC<PreviewLayoutProps> = ({ children }) => {
       resizeObserver.disconnect();
       window.removeEventListener('resize', handleResize);
     };
-  }, [children]);
+  }, [children, margins]); // Re-measure if margins change
 
   // Calculate number of pages needed
-  const numPages = Math.ceil(contentHeight / A4_HEIGHT_PX) || 1;
+  // Note: contentHeight is the height of the narrower content column
+  // We divide by the available height per page (A4 height - top/bottom margins)
+  const numPages = Math.ceil(contentHeight / contentHeightPerPagePx) || 1;
 
   const handleDownloadPDF = async () => {
     if (!previewRef.current) return;
     
     setIsDownloading(true);
     try {
-      const element = previewRef.current;
-      const printContentElement = element.parentElement;
+      // For PDF generation, we want to capture the FULL content as a single seamless strip
+      // and let html2pdf handle the pagination and margins.
+      // We grab the content from our hidden wrapper or the first page's content ref?
+      // Actually, previewRef points to the first page's content div BUT that div is transformed.
+      // Better to clone the contentWrapperRef content which is the full un-transformed list.
       
-      if (!printContentElement) return;
-      
-      // Store original styles
-      const originalTransform = printContentElement.style.transform;
-      const originalMarginBottom = printContentElement.style.marginBottom;
-      const originalMinHeight = element.style.minHeight;
-      const originalWidth = printContentElement.style.width;
-      const originalElementMargin = element.style.margin;
-      const originalElementPadding = element.style.padding;
-      const originalElementHeight = element.style.height;
-      
-      // Temporarily remove transform and set proper dimensions for PDF
-      printContentElement.style.transform = 'none';
-      printContentElement.style.marginBottom = '0';
-      printContentElement.style.width = '210mm';
-      element.style.minHeight = 'auto';
-      element.style.height = 'auto';
-      element.style.margin = '0';
-      element.style.padding = '0';
-      
-      // Force a reflow
-      void printContentElement.offsetHeight;
-      await new Promise(resolve => setTimeout(resolve, 200));
+      const element = contentWrapperRef.current; // This has the full content
+      if (!element) return;
       
       const resumeName = resumeData.personalInfo?.fullName 
         ? `${resumeData.personalInfo.fullName.replace(/\s+/g, '-')}-Resume`
         : 'Resume';
       
-      // Use standard A4 dimensions
-      const a4WidthPx = 794; // 210mm in pixels at 96 DPI
-      
-      // Use html2pdf with standard A4 format - it will automatically paginate
+      // Use html2pdf with user's margins
       const opt = {
-        margin: [0, 0, 0, 0] as [number, number, number, number],
+        margin: [margins.marginTop, margins.marginLeft, margins.marginBottom, margins.marginRight] as [number, number, number, number],
         filename: `${resumeName}.pdf`,
         image: { 
           type: 'jpeg', 
@@ -125,17 +126,13 @@ export const PreviewLayout: React.FC<PreviewLayoutProps> = ({ children }) => {
           useCORS: true,
           logging: false,
           backgroundColor: '#ffffff',
-          width: a4WidthPx,
-          height: element.scrollHeight,
-          windowWidth: a4WidthPx,
-          windowHeight: element.scrollHeight,
-          scrollX: 0,
-          scrollY: 0,
-          allowTaint: false
+          width: contentWidthPx, // Canvas width should match content width
+          windowWidth: contentWidthPx,
+          // height automatically calculated?
         },
         jsPDF: { 
           unit: 'mm', 
-          format: [210, 297], // Explicit A4 dimensions - will paginate automatically
+          format: [210, 297], 
           orientation: 'portrait',
           compress: true
         },
@@ -150,14 +147,6 @@ export const PreviewLayout: React.FC<PreviewLayoutProps> = ({ children }) => {
       const worker = html2pdf().set(opt).from(element).save();
       await worker;
       
-      // Restore original styles
-      printContentElement.style.transform = originalTransform;
-      printContentElement.style.marginBottom = originalMarginBottom;
-      printContentElement.style.width = originalWidth;
-      element.style.minHeight = originalMinHeight;
-      element.style.height = originalElementHeight;
-      element.style.margin = originalElementMargin;
-      element.style.padding = originalElementPadding;
     } catch (error) {
       console.error('Error generating PDF:', error);
       alert('Failed to generate PDF. Please try again.');
@@ -214,13 +203,13 @@ export const PreviewLayout: React.FC<PreviewLayoutProps> = ({ children }) => {
             transformOrigin: 'top center',
           }}
         >
-          {/* Hidden content wrapper to measure actual height */}
+          {/* Hidden content wrapper to measure actual height of content WITHOUT vertical margins */}
           <div
             ref={contentWrapperRef}
             style={{
               position: 'absolute',
               visibility: 'hidden',
-              width: `${A4_WIDTH_MM}mm`,
+              width: `${contentWidthPx}px`, // Constrain width based on L/R margins
               top: '-9999px',
               left: 0,
               pointerEvents: 'none',
@@ -231,7 +220,8 @@ export const PreviewLayout: React.FC<PreviewLayoutProps> = ({ children }) => {
 
           {/* Render each page with clipped content */}
           {Array.from({ length: numPages }).map((_, pageIndex) => {
-            const pageStart = pageIndex * A4_HEIGHT_PX;
+            // For Page N, we want to show content starting at offset N * contentHeightPerPage
+            const contentStartOffset = pageIndex * contentHeightPerPagePx;
             
             return (
               <div
@@ -244,18 +234,33 @@ export const PreviewLayout: React.FC<PreviewLayoutProps> = ({ children }) => {
                   overflow: 'hidden',
                 }}
               >
+                {/* Safe Area Container: Defines the white space on the page where content lives */}
                 <div
-                  ref={pageIndex === 0 ? previewRef : undefined}
                   style={{
-                    width: '100%',
                     position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    transform: `translateY(-${pageStart}px)`,
+                    top: `${marginTopPx}px`,
+                    left: `${marginLeftPx}px`,
+                    width: `${contentWidthPx}px`,
+                    height: `${contentHeightPerPagePx}px`,
+                    overflow: 'hidden',
+                    // outline: '1px dashed #eee', // Debugging aid
                   }}
                 >
-                  {children}
+                  <div
+                    ref={pageIndex === 0 ? previewRef : undefined}
+                    style={{
+                      width: '100%',
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      // Shift the content up to show the correct slice
+                      transform: `translateY(-${contentStartOffset}px)`,
+                    }}
+                  >
+                    {children}
+                  </div>
                 </div>
+
                 {/* Page number indicator */}
                 {numPages > 1 && (
                   <div
