@@ -16,25 +16,23 @@ export const ProfessionalTemplate: React.FC = () => {
       height: '100%',
       display: 'flex',
       flexDirection: (layout.sidebarPosition === 'right' ? 'row-reverse' : 'row') as React.CSSProperties['flexDirection'],
+      paddingTop: `${spacing.marginTop}mm`,
+      paddingBottom: `${spacing.marginBottom}mm`,
+      paddingLeft: `${spacing.marginLeft}mm`,
+      paddingRight: `${spacing.marginRight}mm`,
     },
     sidebar: {
       width: '30%',
       backgroundColor: theme.primaryColor,
       color: 'white',
-      paddingTop: `${spacing.marginTop}mm`,
-      paddingBottom: `${spacing.marginBottom}mm`,
-      paddingLeft: `${spacing.marginLeft}mm`,
-      paddingRight: `${spacing.marginRight}mm`,
+      padding: '2rem', // Internal padding for content
       display: 'flex',
       flexDirection: 'column' as const,
       gap: '2rem',
     },
     main: {
       width: '70%',
-      paddingTop: `${spacing.marginTop}mm`,
-      paddingBottom: `${spacing.marginBottom}mm`,
-      paddingLeft: `${spacing.marginLeft}mm`,
-      paddingRight: `${spacing.marginRight}mm`,
+      padding: '2rem', // Internal padding for content
       backgroundColor: theme.backgroundColor,
     },
     sidebarTitle: {

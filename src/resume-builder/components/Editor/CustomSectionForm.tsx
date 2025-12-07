@@ -2,6 +2,8 @@ import React from 'react';
 import { useResume } from '../../context/ResumeContext';
 import type { CustomSectionItem } from '../../types';
 import { Plus, Trash2 } from 'lucide-react';
+import { Input } from '../../../components/ui/Input';
+import { Button } from '../../../components/ui/Button';
 import { RichEditor } from '../UI/RichEditor';
 import { ListItem } from '../UI/ListItem';
 
@@ -48,40 +50,43 @@ export const CustomSectionForm: React.FC<CustomSectionFormProps> = ({ sectionId 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center mb-4">
-        <div className="flex items-center gap-3">
-          <input
-            type="text"
+        <div className="flex items-center gap-3 flex-1 mr-4">
+          <Input
             value={section.title}
             onChange={(e) => updateCustomSection(sectionId, { title: e.target.value })}
-            className="text-xl font-semibold text-gray-800 bg-transparent border-b border-transparent hover:border-gray-300 focus:border-blue-500 focus:outline-none transition-colors"
+            className="text-xl font-semibold text-gray-800 !bg-transparent !border-0 !border-b !border-transparent hover:!border-gray-300 focus:!border-blue-500 !rounded-none !shadow-none !px-0"
+            placeholder="Section Title"
           />
-          <button
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={() => removeCustomSection(sectionId)}
-            className="text-red-400 hover:text-red-600 p-1 rounded hover:bg-red-50 transition-colors"
+            className="text-red-400 hover:text-red-600 hover:bg-red-50"
             title="Delete Section"
           >
             <Trash2 size={16} />
-          </button>
+          </Button>
         </div>
-        <button
+        <Button
           onClick={addItem}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+          icon={Plus}
+          className="bg-blue-600 hover:bg-blue-700 shadow-sm"
         >
-          <Plus size={18} />
-          <span>Add Item</span>
-        </button>
+          Add Item
+        </Button>
       </div>
 
       <div className="space-y-3">
         {section.items.length === 0 ? (
           <div className="text-center py-8 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
-            <p className="text-gray-500">No items added yet.</p>
-            <button
+            <p className="text-gray-500 mb-2">No items added yet.</p>
+            <Button
+              variant="ghost"
               onClick={addItem}
-              className="mt-2 text-blue-600 hover:text-blue-700 font-medium"
+              className="text-blue-600 hover:text-blue-700"
             >
               Add your first item
-            </button>
+            </Button>
           </div>
         ) : (
           section.items.map((item, index) => (
@@ -95,23 +100,19 @@ export const CustomSectionForm: React.FC<CustomSectionFormProps> = ({ sectionId 
             >
               <div className="grid grid-cols-1 gap-4 mb-4">
                 <div className="form-group">
-                  <label>Title</label>
-                  <input
-                    type="text"
+                  <Input
+                    label="Title"
                     value={item.title}
                     onChange={(e) => updateItem(index, 'title', e.target.value)}
                     placeholder="e.g. Volunteer Role"
-                    className="form-input"
                   />
                 </div>
                 <div className="form-group">
-                  <label>Subtitle (Optional)</label>
-                  <input
-                    type="text"
+                  <Input
+                    label="Subtitle (Optional)"
                     value={item.subtitle}
                     onChange={(e) => updateItem(index, 'subtitle', e.target.value)}
                     placeholder="e.g. 2020 - 2021"
-                    className="form-input"
                   />
                 </div>
                 <div className="form-group">

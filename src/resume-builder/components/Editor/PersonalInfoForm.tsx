@@ -1,6 +1,8 @@
 import React from 'react';
 import { useResume } from '../../context/ResumeContext';
 import { Upload, Globe, Linkedin, Github, Mail, Phone, MapPin } from 'lucide-react';
+import { Input } from '../../../components/ui/Input';
+import { Textarea } from '../../../components/ui/Textarea';
 
 export const PersonalInfoForm: React.FC = () => {
   const { resumeData, updateSection } = useResume();
@@ -62,73 +64,56 @@ export const PersonalInfoForm: React.FC = () => {
         </div>
 
         {/* Full Name */}
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">Full Name</label>
-          <input
-            type="text"
-            name="fullName"
-            value={personalInfo.fullName}
-            onChange={handleChange}
-            placeholder="e.g. Alex Morgan"
-            className="w-full px-3 py-2.5 bg-white border border-slate-300 rounded-lg text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200"
-          />
-        </div>
+        <Input
+          label="Full Name"
+          name="fullName"
+          value={personalInfo.fullName}
+          onChange={handleChange}
+          placeholder="e.g. Alex Morgan"
+        />
 
         {/* Contact Info Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1.5 flex items-center gap-1.5">
-              <Mail size={14} className="text-slate-400" /> Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={personalInfo.email}
-              onChange={handleChange}
-              placeholder="alex@example.com"
-              className="w-full px-3 py-2.5 bg-white border border-slate-300 rounded-lg text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1.5 flex items-center gap-1.5">
-              <Phone size={14} className="text-slate-400" /> Phone
-            </label>
-            <input
-              type="tel"
-              name="phone"
-              value={personalInfo.phone}
-              onChange={handleChange}
-              placeholder="+1 (555) 000-0000"
-              className="w-full px-3 py-2.5 bg-white border border-slate-300 rounded-lg text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200"
-            />
-          </div>
-        </div>
-
-        {/* Address */}
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1.5 flex items-center gap-1.5">
-            <MapPin size={14} className="text-slate-400" /> Address
-          </label>
-          <input
-            type="text"
-            name="address"
-            value={personalInfo.address}
+          <Input
+            label="Email"
+            icon={Mail}
+            type="email"
+            name="email"
+            value={personalInfo.email}
             onChange={handleChange}
-            placeholder="City, Country"
-            className="w-full px-3 py-2.5 bg-white border border-slate-300 rounded-lg text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200"
+            placeholder="alex@example.com"
+          />
+          <Input
+            label="Phone"
+            icon={Phone}
+            type="tel"
+            name="phone"
+            value={personalInfo.phone}
+            onChange={handleChange}
+            placeholder="+1 (555) 000-0000"
           />
         </div>
 
+        {/* Address */}
+        <Input
+          label="Address"
+          icon={MapPin}
+          name="address"
+          value={personalInfo.address}
+          onChange={handleChange}
+          placeholder="City, Country"
+        />
+
         {/* Summary */}
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">Professional Summary</label>
-          <textarea
+          <Textarea
+            label="Professional Summary"
             name="summary"
             value={personalInfo.summary}
             onChange={handleChange}
             rows={4}
             placeholder="Briefly describe your professional background and key achievements..."
-            className="w-full px-3 py-2.5 bg-white border border-slate-300 rounded-lg text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200 resize-y"
+            className="resize-y"
           />
         </div>
 
@@ -137,47 +122,35 @@ export const PersonalInfoForm: React.FC = () => {
           <h3 className="text-sm font-medium text-slate-900 border-b border-slate-200 pb-2">Social Links</h3>
           
           <div className="grid grid-cols-1 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5 flex items-center gap-1.5">
-                <Globe size={14} className="text-slate-400" /> Website
-              </label>
-              <input
-                type="url"
-                name="website"
-                value={personalInfo.website}
-                onChange={handleChange}
-                placeholder="https://yourwebsite.com"
-                className="w-full px-3 py-2.5 bg-white border border-slate-300 rounded-lg text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200"
-              />
-            </div>
+            <Input
+              label="Website"
+              icon={Globe}
+              type="url"
+              name="website"
+              value={personalInfo.website}
+              onChange={handleChange}
+              placeholder="https://yourwebsite.com"
+            />
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <Linkedin size={14} className="text-slate-400" /> LinkedIn
-                </label>
-                <input
-                  type="url"
-                  name="linkedin"
-                  value={personalInfo.linkedin}
-                  onChange={handleChange}
-                  placeholder="linkedin.com/in/username"
-                  className="w-full px-3 py-2.5 bg-white border border-slate-300 rounded-lg text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <Github size={14} className="text-slate-400" /> GitHub
-                </label>
-                <input
-                  type="url"
-                  name="github"
-                  value={personalInfo.github}
-                  onChange={handleChange}
-                  placeholder="github.com/username"
-                  className="w-full px-3 py-2.5 bg-white border border-slate-300 rounded-lg text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200"
-                />
-              </div>
+              <Input
+                label="LinkedIn"
+                icon={Linkedin}
+                type="url"
+                name="linkedin"
+                value={personalInfo.linkedin}
+                onChange={handleChange}
+                placeholder="linkedin.com/in/username"
+              />
+              <Input
+                label="GitHub"
+                icon={Github}
+                type="url"
+                name="github"
+                value={personalInfo.github}
+                onChange={handleChange}
+                placeholder="github.com/username"
+              />
             </div>
           </div>
         </div>

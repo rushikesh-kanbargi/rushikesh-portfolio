@@ -75,7 +75,9 @@ export const PomodoroTimer: React.FC = () => {
         }
       }
       audioRef.current.volume = isMuted ? 0 : volume;
-      audioRef.current.play().catch(e => console.log('Audio play failed:', e));
+      audioRef.current.play().catch(() => {
+        // Autoplay policy might block audio. We fail silently or could show a toast here.
+      });
     } else {
       if (audioRef.current) {
         audioRef.current.pause();

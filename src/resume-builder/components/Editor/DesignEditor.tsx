@@ -3,45 +3,9 @@ import { useResume } from '../../context/ResumeContext';
 import { type ResumeMeta } from '../../types';
 import { COLOR_PALETTES, FONT_OPTIONS } from '../../data/designOptions';
 import { Check } from 'lucide-react';
-
-interface RangeControlProps {
-  label: string;
-  value: number;
-  onChange: (value: number) => void;
-  min: number;
-  max: number;
-  step?: number;
-  unit?: string;
-}
-
-const RangeControl: React.FC<RangeControlProps> = ({ label, value, onChange, min, max, step = 1, unit = '' }) => (
-  <div className="mb-4">
-    <div className="flex justify-between mb-1">
-      <label className="text-sm font-medium text-gray-700">{label}</label>
-      <span className="text-xs text-gray-500">{value}{unit}</span>
-    </div>
-    <div className="flex items-center gap-3">
-      <input
-        type="range"
-        value={value}
-        onChange={(e) => onChange(parseFloat(e.target.value))}
-        min={min}
-        max={max}
-        step={step}
-        className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
-      />
-      <input
-        type="number"
-        value={value}
-        onChange={(e) => onChange(parseFloat(e.target.value))}
-        min={min}
-        max={max}
-        step={step}
-        className="w-16 p-1 text-sm border rounded text-center"
-      />
-    </div>
-  </div>
-);
+import { RangeControl } from '../../../components/ui/RangeControl';
+import { Button } from '../../../components/ui/Button';
+import { Select } from '../../../components/ui/Select';
 
 export const DesignEditor: React.FC = () => {
   const { resumeData, setResumeData } = useResume();
@@ -136,18 +100,12 @@ export const DesignEditor: React.FC = () => {
         <h3 style={{ fontSize: '0.9rem', textTransform: 'uppercase', color: '#6b7280', marginBottom: '1rem' }}>Typography</h3>
         
         <div className="form-group">
-          <label>Font Family</label>
-          <select
+          <Select
+            label="Font Family"
             value={meta.typography.fontFamily}
             onChange={(e) => updateMeta('typography', 'fontFamily', e.target.value)}
-            style={{ width: '100%', padding: '0.5rem', borderRadius: '0.375rem', border: '1px solid var(--border-color)' }}
-          >
-            {FONT_OPTIONS.map((font) => (
-              <option key={font.value} value={font.value} style={{ fontFamily: font.value }}>
-                {font.label}
-              </option>
-            ))}
-          </select>
+            options={FONT_OPTIONS}
+          />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -193,64 +151,52 @@ export const DesignEditor: React.FC = () => {
         <h3 style={{ fontSize: '0.9rem', textTransform: 'uppercase', color: '#6b7280', marginBottom: '1rem' }}>Layout</h3>
         
         <div className="form-group">
-          <label>Columns</label>
-          <div style={{ display: 'flex', gap: '1rem' }}>
-            <button 
+          <label className="block text-sm font-medium text-gray-700 mb-2">Columns</label>
+          <div className="flex gap-4">
+            <Button 
+              variant={meta.layout.columns === 1 ? 'primary' : 'outline'}
               onClick={() => updateMeta('layout', 'columns', 1)}
-              style={{
-                flex: 1,
-                padding: '0.5rem',
-                border: `1px solid ${meta.layout.columns === 1 ? 'var(--primary-color)' : 'var(--border-color)'}`,
-                backgroundColor: meta.layout.columns === 1 ? '#eff6ff' : 'white',
-                borderRadius: '0.375rem',
-                cursor: 'pointer'
-              }}
+              className="flex-1"
             >
               Single
-            </button>
-            <button 
+            </Button>
+            <Button 
+              variant={meta.layout.columns === 2 ? 'primary' : 'outline'}
               onClick={() => updateMeta('layout', 'columns', 2)}
-              style={{
-                flex: 1,
-                padding: '0.5rem',
-                border: `1px solid ${meta.layout.columns === 2 ? 'var(--primary-color)' : 'var(--border-color)'}`,
-                backgroundColor: meta.layout.columns === 2 ? '#eff6ff' : 'white',
-                borderRadius: '0.375rem',
-                cursor: 'pointer'
-              }}
+              className="flex-1"
             >
               Double
-            </button>
+            </Button>
           </div>
         </div>
 
         {meta.layout.columns === 2 && (
           <div className="form-group">
-            <label>Sidebar Position</label>
-            <select
+            <Select
+              label="Sidebar Position"
               value={meta.layout.sidebarPosition}
               onChange={(e) => updateMeta('layout', 'sidebarPosition', e.target.value)}
-              style={{ width: '100%', padding: '0.5rem', borderRadius: '0.375rem', border: '1px solid var(--border-color)' }}
-            >
-              <option value="left">Left</option>
-              <option value="right">Right</option>
-            </select>
+              options={[
+                { value: 'left', label: 'Left' },
+                { value: 'right', label: 'Right' },
+              ]}
+            />
           </div>
         )}
 
         <div className="form-group">
-          <label>Header Layout</label>
-          <select
+          <Select
+            label="Header Layout"
             value={meta.layout.headerLayout}
             onChange={(e) => updateMeta('layout', 'headerLayout', e.target.value)}
-            style={{ width: '100%', padding: '0.5rem', borderRadius: '0.375rem', border: '1px solid var(--border-color)' }}
-          >
-            <option value="center">Center</option>
-            <option value="left">Left Aligned</option>
-            <option value="right">Right Aligned</option>
-            <option value="photo-left">Photo Left</option>
-            <option value="photo-right">Photo Right</option>
-          </select>
+            options={[
+              { value: 'center', label: 'Center' },
+              { value: 'left', label: 'Left Aligned' },
+              { value: 'right', label: 'Right Aligned' },
+              { value: 'photo-left', label: 'Photo Left' },
+              { value: 'photo-right', label: 'Photo Right' },
+            ]}
+          />
         </div>
       </div>
 
@@ -259,30 +205,30 @@ export const DesignEditor: React.FC = () => {
         <h3 style={{ fontSize: '0.9rem', textTransform: 'uppercase', color: '#6b7280', marginBottom: '1rem' }}>Formatting</h3>
         
         <div className="form-group">
-          <label>Date Format</label>
-          <select
+          <Select
+            label="Date Format"
             value={meta.formatting.dateFormat}
             onChange={(e) => updateMeta('formatting', 'dateFormat', e.target.value)}
-            style={{ width: '100%', padding: '0.5rem', borderRadius: '0.375rem', border: '1px solid var(--border-color)' }}
-          >
-            <option value="MMM YYYY">Jan 2023</option>
-            <option value="MM/YYYY">01/2023</option>
-            <option value="YYYY">2023</option>
-          </select>
+            options={[
+              { value: 'MMM YYYY', label: 'Jan 2023' },
+              { value: 'MM/YYYY', label: '01/2023' },
+              { value: 'YYYY', label: '2023' },
+            ]}
+          />
         </div>
 
         <div className="form-group">
-          <label>Skills Style</label>
-          <select
+          <Select
+            label="Skills Style"
             value={meta.formatting.skillsStyle}
             onChange={(e) => updateMeta('formatting', 'skillsStyle', e.target.value)}
-            style={{ width: '100%', padding: '0.5rem', borderRadius: '0.375rem', border: '1px solid var(--border-color)' }}
-          >
-            <option value="tags">Tags</option>
-            <option value="bubbles">Bubbles</option>
-            <option value="list">Comma List</option>
-            <option value="bar">Progress Bar</option>
-          </select>
+            options={[
+              { value: 'tags', label: 'Tags' },
+              { value: 'bubbles', label: 'Bubbles' },
+              { value: 'list', label: 'Comma List' },
+              { value: 'bar', label: 'Progress Bar' },
+            ]}
+          />
         </div>
       </div>
 

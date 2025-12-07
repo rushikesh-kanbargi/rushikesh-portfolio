@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp, Trash2, GripVertical } from 'lucide-react';
+import { Button } from '../../../components/ui/Button';
 
 interface ListItemProps {
   title: string;
@@ -49,34 +50,40 @@ export const ListItem: React.FC<ListItemProps> = ({
           {(onMoveUp || onMoveDown) && (
             <div className="flex flex-col mr-2 gap-0.5">
               {onMoveUp && (
-                <button 
-                  onClick={(e) => { e.stopPropagation(); onMoveUp(); }}
-                  className="p-0.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded transition-colors"
+                <Button 
+                  variant="ghost"
+                  size="sm"
+                  onClick={(e: React.MouseEvent) => { e.stopPropagation(); onMoveUp(); }}
+                  className="h-6 w-6 p-0.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50"
                   title="Move Up"
                 >
                   <ChevronUp size={14} />
-                </button>
+                </Button>
               )}
               {onMoveDown && (
-                <button 
-                  onClick={(e) => { e.stopPropagation(); onMoveDown(); }}
-                  className="p-0.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded transition-colors"
+                <Button 
+                  variant="ghost"
+                  size="sm"
+                  onClick={(e: React.MouseEvent) => { e.stopPropagation(); onMoveDown(); }}
+                  className="h-6 w-6 p-0.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50"
                   title="Move Down"
                 >
                   <ChevronDown size={14} />
-                </button>
+                </Button>
               )}
             </div>
           )}
           
           {onDelete && (
-            <button
-              onClick={(e) => { e.stopPropagation(); onDelete(); }}
-              className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={(e: React.MouseEvent) => { e.stopPropagation(); onDelete(); }}
+              className="h-8 w-8 p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-full"
               title="Delete"
             >
               <Trash2 size={16} />
-            </button>
+            </Button>
           )}
           
           {children && (

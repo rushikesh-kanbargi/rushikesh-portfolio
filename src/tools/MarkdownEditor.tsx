@@ -6,6 +6,8 @@ import {
   Columns, LayoutTemplate, MonitorPlay
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import { Button } from '../components/ui/Button';
+import { Textarea } from '../components/ui/Textarea';
 
 type ViewMode = 'split' | 'editor' | 'preview';
 
@@ -72,79 +74,70 @@ export const MarkdownEditor: React.FC = () => {
           <div className="flex flex-wrap items-center gap-2">
             {/* View Toggles */}
             <div className="flex items-center bg-white border border-slate-200 rounded-lg p-1 mr-2">
-              <button
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => setViewMode('editor')}
-                className={`p-1.5 rounded ${viewMode === 'editor' ? 'bg-slate-100 text-slate-900' : 'text-slate-500 hover:text-slate-700'}`}
+                className={viewMode === 'editor' ? 'bg-slate-100 text-slate-900' : 'text-slate-500 hover:text-slate-700'}
                 title="Editor Only"
               >
                 <LayoutTemplate size={18} />
-              </button>
-              <button
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => setViewMode('split')}
-                className={`p-1.5 rounded ${viewMode === 'split' ? 'bg-slate-100 text-slate-900' : 'text-slate-500 hover:text-slate-700'}`}
+                className={viewMode === 'split' ? 'bg-slate-100 text-slate-900' : 'text-slate-500 hover:text-slate-700'}
                 title="Split View"
               >
                 <Columns size={18} />
-              </button>
-              <button
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => setViewMode('preview')}
-                className={`p-1.5 rounded ${viewMode === 'preview' ? 'bg-slate-100 text-slate-900' : 'text-slate-500 hover:text-slate-700'}`}
+                className={viewMode === 'preview' ? 'bg-slate-100 text-slate-900' : 'text-slate-500 hover:text-slate-700'}
                 title="Preview Only"
               >
                 <MonitorPlay size={18} />
-              </button>
+              </Button>
             </div>
 
-            <button
+            <Button
+              variant="ghost"
               onClick={() => setMarkdown('')}
-              className="p-2 text-slate-500 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
+              className="text-slate-500 hover:text-red-600 hover:bg-red-50"
               title="Clear"
             >
               <Trash2 size={20} />
-            </button>
-            <button
+            </Button>
+            <Button
+              variant={copied ? 'ghost' : 'secondary'}
               onClick={handleCopy}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg font-medium transition-colors ${
-                copied ? 'bg-green-100 text-green-700' : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
-              }`}
+              icon={copied ? Check : Copy}
+              className={copied ? 'bg-green-100 text-green-700 hover:bg-green-200' : ''}
             >
-              {copied ? <Check size={18} /> : <Copy size={18} />}
               <span className="hidden sm:inline">{copied ? 'Copied' : 'Copy'}</span>
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={handleDownload}
-              className="flex items-center gap-2 px-3 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors shadow-sm"
+              icon={Download}
             >
-              <Download size={18} />
               <span className="hidden sm:inline">Download</span>
-            </button>
+            </Button>
           </div>
         </div>
 
         {/* Toolbar */}
         <div className="bg-white border border-slate-200 border-b-0 rounded-t-xl p-2 flex flex-wrap gap-1 shrink-0">
-          <button onClick={() => insertFormatting('**', '**')} className="p-2 hover:bg-slate-100 rounded text-slate-600" title="Bold">
-            <Bold size={18} />
-          </button>
-          <button onClick={() => insertFormatting('*', '*')} className="p-2 hover:bg-slate-100 rounded text-slate-600" title="Italic">
-            <Italic size={18} />
-          </button>
-          <button onClick={() => insertFormatting('# ')} className="p-2 hover:bg-slate-100 rounded text-slate-600" title="Heading">
-            <Heading size={18} />
-          </button>
+          <Button variant="ghost" size="sm" onClick={() => insertFormatting('**', '**')} title="Bold"><Bold size={18} /></Button>
+          <Button variant="ghost" size="sm" onClick={() => insertFormatting('*', '*')} title="Italic"><Italic size={18} /></Button>
+          <Button variant="ghost" size="sm" onClick={() => insertFormatting('# ')} title="Heading"><Heading size={18} /></Button>
           <div className="w-px h-6 bg-slate-200 mx-1 self-center" />
-          <button onClick={() => insertFormatting('- ')} className="p-2 hover:bg-slate-100 rounded text-slate-600" title="List">
-            <List size={18} />
-          </button>
-          <button onClick={() => insertFormatting('> ')} className="p-2 hover:bg-slate-100 rounded text-slate-600" title="Quote">
-            <Quote size={18} />
-          </button>
-          <button onClick={() => insertFormatting('```\n', '\n```')} className="p-2 hover:bg-slate-100 rounded text-slate-600" title="Code Block">
-            <Code size={18} />
-          </button>
-          <button onClick={() => insertFormatting('[', '](url)')} className="p-2 hover:bg-slate-100 rounded text-slate-600" title="Link">
-            <LinkIcon size={18} />
-          </button>
+          <Button variant="ghost" size="sm" onClick={() => insertFormatting('- ')} title="List"><List size={18} /></Button>
+          <Button variant="ghost" size="sm" onClick={() => insertFormatting('> ')} title="Quote"><Quote size={18} /></Button>
+          <Button variant="ghost" size="sm" onClick={() => insertFormatting('```\n', '\n```')} title="Code Block"><Code size={18} /></Button>
+          <Button variant="ghost" size="sm" onClick={() => insertFormatting('[', '](url)')} title="Link"><LinkIcon size={18} /></Button>
         </div>
 
         {/* Editor & Preview */}
@@ -152,11 +145,11 @@ export const MarkdownEditor: React.FC = () => {
           {/* Editor */}
           {(viewMode === 'split' || viewMode === 'editor') && (
             <div className={`flex flex-col ${viewMode === 'split' ? 'w-1/2 border-r border-slate-200' : 'w-full'}`}>
-              <textarea
+              <Textarea
                 ref={textareaRef}
                 value={markdown}
                 onChange={(e) => setMarkdown(e.target.value)}
-                className="flex-1 p-4 font-mono text-sm resize-none focus:outline-none bg-slate-50/50"
+                className="border-0 rounded-none focus:ring-0 bg-slate-50/50 font-mono"
                 placeholder="Type your markdown here..."
                 spellCheck={false}
               />

@@ -1,6 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Code, AlertCircle, BookOpen, ArrowRightLeft, Play } from 'lucide-react';
+import { Input } from '../components/ui/Input';
+import { Button } from '../components/ui/Button';
+import { Select } from '../components/ui/Select';
+import { Textarea } from '../components/ui/Textarea';
 
 const COMMON_PATTERNS = [
   { name: 'Email Address', pattern: '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}' },
@@ -117,35 +121,34 @@ export const RegexTester: React.FC = () => {
           {/* Left Column: Controls & Cheatsheet */}
           <div className="lg:col-span-4 space-y-6">
             {/* Input Controls */}
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-slate-700 mb-2">Quick Patterns</label>
-                <select 
-                  onChange={(e) => setPattern(e.target.value)}
-                  className="w-full p-2 border border-slate-300 rounded-md text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                >
-                  <option value="">Select a pattern...</option>
-                  {COMMON_PATTERNS.map(p => (
-                    <option key={p.name} value={p.pattern}>{p.name}</option>
-                  ))}
-                </select>
-              </div>
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-4">
+              <Select
+                label="Quick Patterns"
+                value={pattern}
+                onChange={(e) => setPattern(e.target.value)}
+                options={[
+                  { value: '', label: 'Select a pattern...' },
+                  ...COMMON_PATTERNS.map(p => ({ value: p.pattern, label: p.name }))
+                ]}
+              />
 
-              <label className="block text-sm font-medium text-slate-700 mb-2">Regular Expression</label>
-              <div className="relative mb-4">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-mono">/</span>
-                <input
-                  type="text"
-                  value={pattern}
-                  onChange={(e) => setPattern(e.target.value)}
-                  className="w-full pl-6 pr-12 py-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:border-transparent font-mono"
-                  placeholder="e.g. [a-z]+"
-                />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 font-mono">/{flags}</span>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Regular Expression</label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-mono">/</span>
+                  <input
+                    type="text"
+                    value={pattern}
+                    onChange={(e) => setPattern(e.target.value)}
+                    className="w-full pl-6 pr-12 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent font-mono text-sm"
+                    placeholder="e.g. [a-z]+"
+                  />
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 font-mono">/{flags}</span>
+                </div>
               </div>
               
               {result.error && (
-                <div className="mb-4 flex items-start gap-2 text-sm text-red-600 bg-red-50 p-2 rounded">
+                <div className="flex items-start gap-2 text-sm text-red-600 bg-red-50 p-2 rounded">
                   <AlertCircle size={16} className="mt-0.5 shrink-0" />
                   <span>{result.error}</span>
                 </div>
@@ -204,22 +207,24 @@ export const RegexTester: React.FC = () => {
           <div className="lg:col-span-8 flex flex-col gap-6">
             {/* Mode Toggle */}
             <div className="flex gap-1 bg-slate-100 p-1 rounded-lg self-start">
-              <button
+              <Button
+                variant={mode === 'match' ? 'secondary' : 'ghost'}
                 onClick={() => setMode('match')}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-all flex items-center gap-2 ${
-                  mode === 'match' ? 'bg-white text-purple-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
-                }`}
+                icon={Play}
+                size="sm"
+                className={mode === 'match' ? 'bg-white text-purple-600 shadow-sm' : ''}
               >
-                <Play size={16} /> Match
-              </button>
-              <button
+                Match
+              </Button>
+              <Button
+                variant={mode === 'replace' ? 'secondary' : 'ghost'}
                 onClick={() => setMode('replace')}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-all flex items-center gap-2 ${
-                  mode === 'replace' ? 'bg-white text-purple-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
-                }`}
+                icon={ArrowRightLeft}
+                size="sm"
+                className={mode === 'replace' ? 'bg-white text-purple-600 shadow-sm' : ''}
               >
-                <ArrowRightLeft size={16} /> Replace
-              </button>
+                Replace
+              </Button>
             </div>
 
             {/* Test String Editor */}
@@ -240,10 +245,10 @@ export const RegexTester: React.FC = () => {
                 </div>
                 
                 {/* Input Layer */}
-                <textarea
+                <Textarea
                   value={text}
                   onChange={(e) => setText(e.target.value)}
-                  className="absolute inset-0 w-full h-full p-4 font-mono text-sm resize-none focus:outline-none bg-transparent text-slate-800 z-20"
+                  className="absolute inset-0 w-full h-full p-4 font-mono text-sm resize-none focus:outline-none bg-transparent text-slate-800 z-20 border-0 rounded-none focus:ring-0"
                   spellCheck={false}
                   placeholder="Enter text to test against your regex..."
                 />
@@ -257,11 +262,10 @@ export const RegexTester: React.FC = () => {
                   <div className="p-3 border-b border-slate-200 bg-slate-50">
                     <span className="font-medium text-slate-700 text-sm">Substitution</span>
                   </div>
-                  <input
-                    type="text"
+                  <Input
                     value={replaceText}
                     onChange={(e) => setReplaceText(e.target.value)}
-                    className="w-full p-4 font-mono text-sm focus:outline-none"
+                    className="w-full p-4 font-mono text-sm focus:outline-none border-0 rounded-none focus:ring-0"
                     placeholder="Enter replacement text (use $1 for groups)..."
                   />
                 </div>

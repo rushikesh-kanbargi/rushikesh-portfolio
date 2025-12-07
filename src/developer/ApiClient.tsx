@@ -81,9 +81,10 @@ export const ApiClient: React.FC = () => {
       });
 
       addToHistory(method, url, res.status);
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Network Error';
       setResponse({
-        error: error.message || 'Network Error',
+        error: errorMessage,
         status: 0,
       });
       addToHistory(method, url, 0);
@@ -260,8 +261,73 @@ export const ApiClient: React.FC = () => {
                 )}
 
                 {activeTab === 'params' && (
-                  <div className="text-center text-slate-500 py-8">
-                    Query params editing coming soon. Add them directly to the URL for now.
+                  <div className="space-y-2">
+                    {(() => {
+                      const [baseUrl, queryString] = url.split('?');
+                      const params = new URLSearchParams(queryString || '');
+                      const paramEntries = Array.from(params.entries());
+                      if (paramEntries.length === 0) paramEntries.push(['', '']);
+
+                      const updateUrl = (entries: [string, string][]) => {
+                        // entries.filter check removed as we pass entries directly to allow empty params
+                        const newQs = new URLSearchParams(entries).toString();
+                        setUrl(newQs ? `${baseUrl}?${newQs}` : baseUrl);
+                      };
+
+                      return (
+                        <>
+                          {paramEntries.map(([key, value], index) => (
+                            <div key={index} className="flex gap-2">
+                              <input
+                                type="text"
+                                placeholder="Key"
+                                value={key}
+                                onChange={(e) => {
+                                  const newEntries = [...paramEntries];
+                                  newEntries[index][0] = e.target.value;
+                                  // For live update, we update URL immediately.
+                                  updateUrl(newEntries);
+                                }}
+                                className="flex-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
+                              />
+                              <input
+                                type="text"
+                                placeholder="Value"
+                                value={value}
+                                onChange={(e) => {
+                                  const newEntries = [...paramEntries];
+                                  newEntries[index][1] = e.target.value;
+                                  updateUrl(newEntries);
+                                }}
+                                className="flex-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
+                              />
+                              <button
+                                onClick={() => {
+                                  const newEntries = paramEntries.filter((_, i) => i !== index);
+                                  updateUrl(newEntries);
+                                }}
+                                className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                              >
+                                <Trash2 size={18} />
+                              </button>
+                            </div>
+                          ))}
+                          <button
+                            onClick={() => {
+                               // Append a pair that will be serialized as "=" or similar so it persists
+                               const newEntries = [...paramEntries, ['', ''] as [string, string]];
+                               updateUrl(newEntries);
+                            }}
+                            className="mt-2 text-sm text-indigo-600 font-medium hover:text-indigo-700 flex items-center gap-1"
+                          >
+                             <Plus size={16} /> Add Param
+                          </button>
+                        </>
+                      );
+                    })()}
+                    <div className="text-xs text-slate-400 mt-4 px-2">
+                       Note: Params are synced with the URL directly.
+                    </div>
                   </div>
                 )}
               </div>

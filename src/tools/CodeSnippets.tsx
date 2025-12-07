@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Code2, Search, Copy, Check, Tag, Plus, Trash2, Edit2, X, Save } from 'lucide-react';
+import { Input } from '../components/ui/Input';
+import { Button } from '../components/ui/Button';
+import { Select } from '../components/ui/Select';
+import { Textarea } from '../components/ui/Textarea';
 
 interface Snippet {
   id: string;
@@ -172,22 +176,22 @@ export const CodeSnippets: React.FC = () => {
 
           <div className="flex gap-4 w-full md:w-auto">
             <div className="relative flex-1 md:w-64">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search snippets..."
-                className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
               />
             </div>
-            <button
+            <Button
               onClick={handleCreate}
-              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors shadow-sm whitespace-nowrap"
+              icon={Plus}
+              className="bg-green-600 hover:bg-green-700 focus:ring-green-500"
             >
-              <Plus size={20} />
               <span className="hidden sm:inline">New Snippet</span>
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -295,60 +299,50 @@ export const CodeSnippets: React.FC = () => {
             </div>
             
             <div className="p-6 space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Title</label>
-                <input
-                  type="text"
-                  value={formData.title}
-                  onChange={e => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                  className="w-full p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                  placeholder="e.g. React Hook"
-                />
-              </div>
+              <Input
+                label="Title"
+                value={formData.title}
+                onChange={e => setFormData(prev => ({ ...prev, title: e.target.value }))}
+                placeholder="e.g. React Hook"
+              />
               
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Description</label>
-                <input
-                  type="text"
-                  value={formData.description}
-                  onChange={e => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                  className="w-full p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                  placeholder="Brief description..."
-                />
-              </div>
+              <Input
+                label="Description"
+                value={formData.description}
+                onChange={e => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                placeholder="Brief description..."
+              />
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Language</label>
-                  <select
+                  <Select
+                    label="Language"
                     value={formData.language}
                     onChange={e => setFormData(prev => ({ ...prev, language: e.target.value }))}
-                    className="w-full p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                  >
-                    <option value="javascript">JavaScript</option>
-                    <option value="typescript">TypeScript</option>
-                    <option value="python">Python</option>
-                    <option value="css">CSS</option>
-                    <option value="html">HTML</option>
-                    <option value="json">JSON</option>
-                    <option value="sql">SQL</option>
-                    <option value="bash">Bash</option>
-                  </select>
+                    options={[
+                      { value: 'javascript', label: 'JavaScript' },
+                      { value: 'typescript', label: 'TypeScript' },
+                      { value: 'python', label: 'Python' },
+                      { value: 'css', label: 'CSS' },
+                      { value: 'html', label: 'HTML' },
+                      { value: 'json', label: 'JSON' },
+                      { value: 'sql', label: 'SQL' },
+                      { value: 'bash', label: 'Bash' },
+                    ]}
+                  />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Tags</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-1.5">Tags</label>
                   <div className="flex gap-2">
-                    <input
-                      type="text"
-                      value={tagInput}
-                      onChange={e => setTagInput(e.target.value)}
-                      onKeyDown={e => e.key === 'Enter' && addTag()}
-                      className="flex-1 p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                      placeholder="Add tag..."
-                    />
-                    <button onClick={addTag} className="p-2 bg-slate-100 rounded-lg hover:bg-slate-200">
-                      <Plus size={20} />
-                    </button>
+                    <div className="flex-1">
+                      <Input
+                        value={tagInput}
+                        onChange={e => setTagInput(e.target.value)}
+                        onKeyDown={e => e.key === 'Enter' && addTag()}
+                        placeholder="Add tag..."
+                      />
+                    </div>
+                    <Button onClick={addTag} variant="secondary" icon={Plus} />
                   </div>
                 </div>
               </div>
@@ -364,12 +358,12 @@ export const CodeSnippets: React.FC = () => {
                 </div>
               )}
 
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Code</label>
-                <textarea
+              <div className="h-64">
+                <Textarea
+                  label="Code"
                   value={formData.code}
                   onChange={e => setFormData(prev => ({ ...prev, code: e.target.value }))}
-                  className="w-full h-64 p-4 font-mono text-sm bg-slate-900 text-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
+                  className="bg-slate-900 text-slate-300 font-mono"
                   placeholder="// Paste your code here..."
                   spellCheck={false}
                 />
@@ -377,19 +371,19 @@ export const CodeSnippets: React.FC = () => {
             </div>
 
             <div className="p-6 border-t border-slate-100 bg-slate-50 rounded-b-xl flex justify-end gap-3">
-              <button
+              <Button
+                variant="ghost"
                 onClick={() => setIsModalOpen(false)}
-                className="px-4 py-2 text-slate-600 hover:bg-slate-200 rounded-lg font-medium transition-colors"
               >
                 Cancel
-              </button>
-              <button
+              </Button>
+              <Button
                 onClick={handleSave}
-                className="flex items-center gap-2 px-6 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors shadow-sm"
+                icon={Save}
+                className="bg-green-600 hover:bg-green-700 focus:ring-green-500"
               >
-                <Save size={18} />
                 Save Snippet
-              </button>
+              </Button>
             </div>
           </div>
         </div>

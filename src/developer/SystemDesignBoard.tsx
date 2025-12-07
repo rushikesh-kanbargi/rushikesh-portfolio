@@ -112,7 +112,7 @@ export const SystemDesignBoard: React.FC = () => {
         link.click();
         document.body.removeChild(link);
       } catch (err) {
-        console.error('Export failed:', err);
+        // Fail silently or handle error
       }
     }
   };

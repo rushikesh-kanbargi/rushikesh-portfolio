@@ -2,6 +2,8 @@ import React from 'react';
 import { useResume } from '../../context/ResumeContext';
 import type { Experience } from '../../types';
 import { Plus, Wand2, SpellCheck, Book, Briefcase } from 'lucide-react';
+import { Input } from '../../../components/ui/Input';
+import { Button } from '../../../components/ui/Button';
 import { RichEditor } from '../UI/RichEditor';
 import { ListItem } from '../UI/ListItem';
 import { useAI } from '../../hooks/useAI';
@@ -99,13 +101,13 @@ export const ExperienceForm: React.FC = () => {
           <h2 className="text-lg font-semibold text-slate-900">Work Experience</h2>
           <span className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-full">{experience.length} Items</span>
         </div>
-        <button
+        <Button
           onClick={addExperience}
-          className="flex items-center gap-2 px-3 py-1.5 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-all shadow-sm hover:shadow-md"
+          icon={Plus}
+          className="bg-indigo-600 hover:bg-indigo-700 shadow-sm"
         >
-          <Plus size={16} />
-          <span>Add Position</span>
-        </button>
+          Add Position
+        </Button>
       </div>
 
       <div className="space-y-4">
@@ -116,12 +118,13 @@ export const ExperienceForm: React.FC = () => {
             </div>
             <h3 className="text-sm font-medium text-slate-900">No experience added yet</h3>
             <p className="text-xs text-slate-500 mt-1 mb-3">Add your professional work history.</p>
-            <button
+            <Button
+              variant="ghost"
               onClick={addExperience}
-              className="text-sm text-indigo-600 hover:text-indigo-700 font-medium hover:underline"
+              className="text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50"
             >
               Add your first position
-            </button>
+            </Button>
           </div>
         ) : (
           experience.map((exp, index) => (
@@ -135,44 +138,36 @@ export const ExperienceForm: React.FC = () => {
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1.5">Position Title</label>
-                  <input
-                    type="text"
+                  <Input
+                    label="Position Title"
                     value={exp.position}
                     onChange={(e) => updateExperience(index, 'position', e.target.value)}
                     placeholder="e.g. Senior Software Engineer"
-                    className="w-full px-3 py-2.5 bg-white border border-slate-300 rounded-lg text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1.5">Company Name</label>
-                  <input
-                    type="text"
+                  <Input
+                    label="Company Name"
                     value={exp.company}
                     onChange={(e) => updateExperience(index, 'company', e.target.value)}
                     placeholder="e.g. Google"
-                    className="w-full px-3 py-2.5 bg-white border border-slate-300 rounded-lg text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1.5">Start Date</label>
-                  <input
-                    type="text"
+                  <Input
+                    label="Start Date"
                     value={exp.startDate}
                     onChange={(e) => updateExperience(index, 'startDate', e.target.value)}
                     placeholder="MM/YYYY"
-                    className="w-full px-3 py-2.5 bg-white border border-slate-300 rounded-lg text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1.5">End Date</label>
                   <div className="flex gap-3 items-center">
-                    <input
-                      type="text"
+                    <Input
                       value={exp.endDate}
                       onChange={(e) => updateExperience(index, 'endDate', e.target.value)}
                       placeholder="MM/YYYY"
-                      className="w-full px-3 py-2.5 bg-white border border-slate-300 rounded-lg text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200 disabled:bg-slate-50 disabled:text-slate-400"
                       disabled={exp.current}
                     />
                     <label className="flex items-center gap-2 text-sm whitespace-nowrap cursor-pointer select-none">
@@ -187,45 +182,49 @@ export const ExperienceForm: React.FC = () => {
                   </div>
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-slate-700 mb-1.5">Location</label>
-                  <input
-                    type="text"
+                  <Input
+                    label="Location"
                     value={exp.location}
                     onChange={(e) => updateExperience(index, 'location', e.target.value)}
                     placeholder="e.g. San Francisco, CA"
-                    className="w-full px-3 py-2.5 bg-white border border-slate-300 rounded-lg text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200"
                   />
                 </div>
                 <div className="md:col-span-2">
                   <div className="flex justify-between items-center mb-2">
                     <label className="block text-sm font-medium text-slate-700">Description</label>
                     <div className="flex gap-2">
-                      <button
+                      <Button
+                        variant="ghost"
+                        size="sm"
                         onClick={() => handleFixGrammar(index, exp.description)}
                         disabled={loading || generatingIndex === index}
-                        className="flex items-center gap-1.5 text-xs font-medium text-teal-600 hover:text-teal-700 bg-teal-50 hover:bg-teal-100 px-2 py-1 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="text-teal-600 hover:text-teal-700 bg-teal-50 hover:bg-teal-100"
                         title="Fix grammar and improve clarity"
                       >
-                        <SpellCheck size={12} className={loading && generatingIndex === index ? 'animate-spin' : ''} />
+                        <SpellCheck size={14} className={loading && generatingIndex === index ? 'animate-spin' : ''} />
                         Fix Grammar
-                      </button>
-                      <button
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
                         onClick={() => setLibraryModalOpen(index)}
-                        className="flex items-center gap-1.5 text-xs font-medium text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-2 py-1 rounded-md transition-colors"
+                        className="text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100"
                         title="Browse content library"
                       >
-                        <Book size={12} />
+                        <Book size={14} />
                         Library
-                      </button>
-                      <button
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
                         onClick={() => handleGenerateAI(index, exp.position, exp.company)}
                         disabled={loading || generatingIndex === index}
-                        className="flex items-center gap-1.5 text-xs font-medium text-purple-600 hover:text-purple-700 bg-purple-50 hover:bg-purple-100 px-2 py-1 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="text-purple-600 hover:text-purple-700 bg-purple-50 hover:bg-purple-100"
                         title="Generate bullet points with AI"
                       >
-                        <Wand2 size={12} className={loading && generatingIndex === index ? 'animate-spin' : ''} />
+                        <Wand2 size={14} className={loading && generatingIndex === index ? 'animate-spin' : ''} />
                         {loading && generatingIndex === index ? 'Generating...' : 'Generate AI'}
-                      </button>
+                      </Button>
                     </div>
                   </div>
                   <RichEditor

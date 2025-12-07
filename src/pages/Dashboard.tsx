@@ -8,6 +8,7 @@ import {
   Maximize2, Minimize2,
   FileJson, Code2, Image as ImageIcon
 } from 'lucide-react';
+import { Button } from '../components/ui/Button';
 
 export const Dashboard: React.FC = () => {
   const [greeting, setGreeting] = useState('');
@@ -55,17 +56,14 @@ export const Dashboard: React.FC = () => {
               {currentTime.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
             </p>
           </div>
-          <button
+          <Button
             onClick={() => setIsFocusMode(!isFocusMode)}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
-              isFocusMode 
-                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200' 
-                : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
-            }`}
+            variant={isFocusMode ? 'primary' : 'outline'}
+            icon={isFocusMode ? Minimize2 : Maximize2}
+            className={isFocusMode ? 'shadow-lg shadow-indigo-200' : 'bg-white'}
           >
-            {isFocusMode ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
             {isFocusMode ? 'Exit Focus' : 'Focus Mode'}
-          </button>
+          </Button>
         </div>
 
         <AnimatePresence mode="wait">

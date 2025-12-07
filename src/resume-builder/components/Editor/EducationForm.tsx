@@ -2,6 +2,7 @@ import React from 'react';
 import { useResume } from '../../context/ResumeContext';
 import type { Education } from '../../types';
 import { Plus } from 'lucide-react';
+import { Input } from '../../../components/ui/Input';
 import { RichEditor } from '../UI/RichEditor';
 import { ListItem } from '../UI/ListItem';
 
@@ -79,65 +80,53 @@ export const EducationForm: React.FC = () => {
               onMoveDown={index < education.length - 1 ? () => moveEducation(index, 'down') : undefined}
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div className="form-group">
-                  <label>School / University</label>
-                  <input
-                    type="text"
+                <div>
+                  <Input
+                    label="School / University"
                     value={edu.institution}
                     onChange={(e) => updateEducation(index, 'institution', e.target.value)}
                     placeholder="School Name"
-                    className="form-input"
                   />
                 </div>
-                <div className="form-group">
-                  <label>Degree</label>
-                  <input
-                    type="text"
+                <div>
+                  <Input
+                    label="Degree"
                     value={edu.degree}
                     onChange={(e) => updateEducation(index, 'degree', e.target.value)}
                     placeholder="e.g. Bachelor of Science"
-                    className="form-input"
                   />
                 </div>
-                <div className="form-group">
-                  <label>Field of Study</label>
-                  <input
-                    type="text"
+                <div>
+                  <Input
+                    label="Field of Study"
                     value={edu.fieldOfStudy}
                     onChange={(e) => updateEducation(index, 'fieldOfStudy', e.target.value)}
                     placeholder="e.g. Computer Science"
-                    className="form-input"
                   />
                 </div>
-                <div className="form-group">
-                  <label>Location</label>
-                  <input
-                    type="text"
+                <div>
+                  <Input
+                    label="Location"
                     value={edu.location}
                     onChange={(e) => updateEducation(index, 'location', e.target.value)}
                     placeholder="e.g. Boston, MA"
-                    className="form-input"
                   />
                 </div>
-                <div className="form-group">
-                  <label>Start Date</label>
-                  <input
-                    type="text"
+                <div>
+                  <Input
+                    label="Start Date"
                     value={edu.startDate}
                     onChange={(e) => updateEducation(index, 'startDate', e.target.value)}
                     placeholder="MM/YYYY"
-                    className="form-input"
                   />
                 </div>
-                <div className="form-group">
-                  <label>End Date</label>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1.5">End Date</label>
                   <div className="flex gap-2 items-center">
-                    <input
-                      type="text"
+                    <Input
                       value={edu.endDate}
                       onChange={(e) => updateEducation(index, 'endDate', e.target.value)}
                       placeholder="MM/YYYY"
-                      className="form-input"
                       disabled={edu.current}
                     />
                     <label className="flex items-center gap-2 text-sm whitespace-nowrap cursor-pointer">

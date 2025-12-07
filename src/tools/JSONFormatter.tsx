@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Copy, Check, Trash2, FileJson, AlertCircle, Upload, Download, Braces, ListTree } from 'lucide-react';
 import { JsonTree } from './components/JsonTree';
+import { Button } from '../components/ui/Button';
+import { Textarea } from '../components/ui/Textarea';
 
 export const JSONFormatter: React.FC = () => {
   const [input, setInput] = useState('');
@@ -119,28 +121,27 @@ export const JSONFormatter: React.FC = () => {
           </div>
 
           <div className="flex gap-2">
-             <input 
+            <input 
               type="file" 
               ref={fileInputRef}
               onChange={handleFileUpload} 
               accept=".json" 
               className="hidden" 
             />
-            <button
+            <Button
+              variant="secondary"
               onClick={() => fileInputRef.current?.click()}
-              className="flex items-center gap-2 px-3 py-2 bg-white text-slate-700 border border-slate-200 rounded-lg font-medium hover:bg-slate-50 transition-colors"
+              icon={Upload}
             >
-              <Upload size={18} />
               <span className="hidden sm:inline">Upload</span>
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={handleDownload}
               disabled={!output}
-              className="flex items-center gap-2 px-3 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              icon={Download}
             >
-              <Download size={18} />
               <span className="hidden sm:inline">Download</span>
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -151,20 +152,22 @@ export const JSONFormatter: React.FC = () => {
             <div className="p-4 border-b border-slate-200 bg-slate-50 flex justify-between items-center">
               <span className="font-medium text-slate-700">Input JSON</span>
               <div className="flex gap-2">
-                <button
+                <Button
+                  variant="ghost"
+                  size="sm"
                   onClick={handleClear}
-                  className="p-1.5 text-slate-500 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
+                  className="text-slate-500 hover:text-red-600 hover:bg-red-50"
                   title="Clear"
                 >
                   <Trash2 size={18} />
-                </button>
+                </Button>
               </div>
             </div>
-            <textarea
+            <Textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Paste your JSON here..."
-              className="flex-1 p-4 font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+              className="border-0 rounded-none focus:ring-0 bg-white"
               spellCheck={false}
             />
           </div>
@@ -173,55 +176,45 @@ export const JSONFormatter: React.FC = () => {
           <div className="flex flex-col bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
             <div className="p-4 border-b border-slate-200 bg-slate-50 flex justify-between items-center">
               <div className="flex items-center gap-2 bg-slate-200/50 p-1 rounded-lg">
-                <button
+                <Button
+                  variant={viewMode === 'code' ? 'secondary' : 'ghost'}
+                  size="sm"
                   onClick={() => setViewMode('code')}
-                  className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${
-                    viewMode === 'code' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
-                  }`}
+                  className={viewMode === 'code' ? 'text-indigo-600 shadow-sm' : 'text-slate-600'}
                 >
-                  <div className="flex items-center gap-1">
-                    <Braces size={14} />
-                    Code
-                  </div>
-                </button>
-                <button
+                  <Braces size={14} />
+                  Code
+                </Button>
+                <Button
+                  variant={viewMode === 'tree' ? 'secondary' : 'ghost'}
+                  size="sm"
                   onClick={() => setViewMode('tree')}
                   disabled={!parsedData}
-                  className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${
-                    viewMode === 'tree' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
-                  } disabled:opacity-50`}
+                  className={viewMode === 'tree' ? 'text-indigo-600 shadow-sm' : 'text-slate-600'}
                 >
-                  <div className="flex items-center gap-1">
-                    <ListTree size={14} />
-                    Tree
-                  </div>
-                </button>
+                  <ListTree size={14} />
+                  Tree
+                </Button>
               </div>
 
               <div className="flex gap-2">
-                <button
-                  onClick={handleFormat}
-                  className="px-3 py-1.5 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded transition-colors"
-                >
+                <Button onClick={handleFormat} size="sm">
                   Format
-                </button>
-                <button
-                  onClick={handleMinify}
-                  className="px-3 py-1.5 text-sm font-medium text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 rounded transition-colors"
-                >
+                </Button>
+                <Button onClick={handleMinify} variant="secondary" size="sm">
                   Minify
-                </button>
+                </Button>
                 <div className="w-px h-8 bg-slate-300 mx-1"></div>
-                <button
+                <Button
+                  variant={copied ? 'ghost' : 'ghost'}
+                  size="sm"
                   onClick={handleCopy}
                   disabled={!output}
-                  className={`p-1.5 rounded transition-colors ${
-                    copied ? 'text-green-600 bg-green-50' : 'text-slate-500 hover:text-indigo-600 hover:bg-indigo-50'
-                  } disabled:opacity-50 disabled:cursor-not-allowed`}
+                  className={copied ? 'text-green-600 bg-green-50' : ''}
                   title="Copy Output"
                 >
                   {copied ? <Check size={18} /> : <Copy size={18} />}
-                </button>
+                </Button>
               </div>
             </div>
             
@@ -237,11 +230,11 @@ export const JSONFormatter: React.FC = () => {
               ) : (
                 <>
                   {viewMode === 'code' ? (
-                    <textarea
+                    <Textarea
                       readOnly
                       value={output}
                       placeholder="Result will appear here..."
-                      className="w-full h-full p-4 font-mono text-sm resize-none focus:outline-none bg-slate-50 text-slate-800"
+                      className="border-0 rounded-none focus:ring-0 bg-slate-50 font-mono"
                       spellCheck={false}
                     />
                   ) : (

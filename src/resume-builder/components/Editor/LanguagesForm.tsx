@@ -2,6 +2,9 @@ import React from 'react';
 import { useResume } from '../../context/ResumeContext';
 import { type Language } from '../../types';
 import { Plus, Trash2 } from 'lucide-react';
+import { Input } from '../../../components/ui/Input';
+import { Button } from '../../../components/ui/Button';
+import { Select } from '../../../components/ui/Select';
 
 export const LanguagesForm: React.FC = () => {
   const { resumeData, updateSection } = useResume();
@@ -27,68 +30,58 @@ export const LanguagesForm: React.FC = () => {
   };
 
   return (
-    <div className="form-section">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-        <h2>Languages</h2>
-        <button 
-          onClick={addLanguage}
-          style={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: '0.5rem',
-            padding: '0.5rem 1rem',
-            backgroundColor: 'var(--primary-color)',
-            color: 'white',
-            border: 'none',
-            borderRadius: '0.375rem',
-            fontSize: '0.875rem'
-          }}
-        >
-          <Plus size={16} /> Add
-        </button>
+    <div className="space-y-6 animate-fadeIn">
+      <div className="flex justify-between items-center mb-2">
+        <div className="flex items-center gap-2">
+          <h2 className="text-lg font-semibold text-slate-900">Languages</h2>
+          <span className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-full">{languages.length} Items</span>
+        </div>
+        <Button onClick={addLanguage} icon={Plus} size="sm">
+          Add Language
+        </Button>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {languages.map((lang) => (
-          <div key={lang.id} style={{ 
-            border: '1px solid var(--border-color)', 
-            borderRadius: '0.5rem', 
-            padding: '0.75rem',
-            backgroundColor: 'white',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '0.5rem'
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <button 
-                onClick={() => removeLanguage(lang.id)}
-                style={{ color: '#ef4444', background: 'none', border: 'none', padding: '0' }}
-                title="Delete"
-              >
-                <Trash2 size={16} />
-              </button>
-            </div>
-            <input
-              type="text"
+          <div key={lang.id} className="relative p-4 bg-white border border-slate-200 rounded-lg shadow-sm group hover:border-indigo-300 transition-colors space-y-3">
+            <button 
+              onClick={() => removeLanguage(lang.id)}
+              className="absolute top-2 right-2 text-slate-400 hover:text-red-500 p-1 rounded-md hover:bg-red-50 transition-colors opacity-0 group-hover:opacity-100"
+              title="Delete"
+            >
+              <Trash2 size={14} />
+            </button>
+            
+            <Input
               value={lang.name}
               onChange={(e) => updateLanguage(lang.id, 'name', e.target.value)}
-              placeholder="Language"
-              style={{ width: '100%' }}
+              placeholder="Language (e.g. English)"
+              className="font-medium"
             />
-            <select
+            
+            <Select
               value={lang.proficiency}
               onChange={(e) => updateLanguage(lang.id, 'proficiency', e.target.value)}
-              style={{ width: '100%', padding: '0.5rem', borderRadius: '0.375rem', border: '1px solid var(--border-color)' }}
-            >
-              <option value="Native">Native</option>
-              <option value="Fluent">Fluent</option>
-              <option value="Advanced">Advanced</option>
-              <option value="Intermediate">Intermediate</option>
-              <option value="Beginner">Beginner</option>
-            </select>
+              options={[
+                { value: 'Native', label: 'Native' },
+                { value: 'Fluent', label: 'Fluent' },
+                { value: 'Advanced', label: 'Advanced' },
+                { value: 'Intermediate', label: 'Intermediate' },
+                { value: 'Beginner', label: 'Beginner' },
+              ]}
+            />
           </div>
         ))}
       </div>
+
+      {languages.length === 0 && (
+        <div className="text-center py-8 bg-slate-50 rounded-xl border-2 border-dashed border-slate-200">
+          <p className="text-slate-500 text-sm">No languages added yet.</p>
+          <Button variant="ghost" size="sm" onClick={addLanguage} className="mt-2">
+            Add your first language
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

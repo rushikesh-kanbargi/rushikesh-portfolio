@@ -2,6 +2,7 @@ import React from 'react';
 import { useResume } from '../../context/ResumeContext';
 import type { Project } from '../../types';
 import { Plus } from 'lucide-react';
+import { Input } from '../../../components/ui/Input';
 import { RichEditor } from '../UI/RichEditor';
 import { ListItem } from '../UI/ListItem';
 
@@ -75,34 +76,28 @@ export const ProjectsForm: React.FC = () => {
               onMoveDown={index < projects.length - 1 ? () => moveProject(index, 'down') : undefined}
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div className="form-group">
-                  <label>Project Name</label>
-                  <input
-                    type="text"
+                <div>
+                  <Input
+                    label="Project Name"
                     value={project.name}
                     onChange={(e) => updateProject(index, 'name', e.target.value)}
                     placeholder="e.g. E-commerce Platform"
-                    className="form-input"
                   />
                 </div>
-                <div className="form-group">
-                  <label>Link (Optional)</label>
-                  <input
-                    type="text"
+                <div>
+                  <Input
+                    label="Link (Optional)"
                     value={project.link}
                     onChange={(e) => updateProject(index, 'link', e.target.value)}
                     placeholder="https://..."
-                    className="form-input"
                   />
                 </div>
-                <div className="form-group md:col-span-2">
-                  <label>Technologies Used</label>
-                  <input
-                    type="text"
+                <div className="md:col-span-2">
+                  <Input
+                    label="Technologies Used"
                     value={project.technologies}
                     onChange={(e) => updateProject(index, 'technologies', e.target.value)}
                     placeholder="e.g. React, Node.js, MongoDB"
-                    className="form-input"
                   />
                 </div>
                 <div className="form-group md:col-span-2">
