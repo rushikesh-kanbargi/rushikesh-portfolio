@@ -19,7 +19,7 @@ export default function TerminalBlock() {
 
   useEffect(() => {
     const timers: ReturnType<typeof setTimeout>[] = [];
-    lines.forEach(({ delay }, i) => {
+    lines.forEach(({ delay }) => {
       timers.push(setTimeout(() => setVisible((v) => v + 1), delay));
     });
     return () => timers.forEach(clearTimeout);

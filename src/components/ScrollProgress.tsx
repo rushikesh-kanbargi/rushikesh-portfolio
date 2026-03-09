@@ -1,30 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
-
-export function useScrollProgress() {
-  const [progress, setProgress] = useState(0);
-  const reduceMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (reduceMotion) {
-      setProgress(0);
-      return;
-    }
-    let rafId = 0;
-    function tick() {
-      const total = document.documentElement.scrollHeight - window.innerHeight;
-      if (total > 0) {
-        setProgress(Math.min(Math.max(window.scrollY / total, 0), 1));
-      }
-      rafId = requestAnimationFrame(tick);
-    }
-    rafId = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafId);
-  }, [reduceMotion]);
-
-  return progress;
-}
+import { useScrollProgress } from '../hooks/useScrollProgress';
 
 export default function ScrollProgress() {
   const progress = useScrollProgress();
