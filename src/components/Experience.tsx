@@ -1,93 +1,95 @@
 import { motion } from 'framer-motion';
+import { viewportOnce } from '../lib/motion';
 
 const experiences = [
   {
     role: 'Senior Software Engineer',
     company: 'Vayavya Labs Pvt. Ltd.',
-    period: 'October 2024 - Present',
+    period: 'Oct 2024 – Present',
     description: 'Designed and developed a web-based Threat Analysis & Risk Assessment (TARA) tool. Built interactive React Flow dashboards and integrated AI-powered backend APIs. Implemented programmatic PDF exports and Stripe payment integration.',
   },
   {
     role: 'Senior Software Engineer',
     company: 'Space Matrix',
-    period: 'May 2024 - October 2024',
-    description: 'Spearheaded digital transformation at the organizational level, automating key financial and procurement processes (80% improvement). Took ownership of technology development and delivery processes across multiple stacks and PaaS platforms.',
+    period: 'May 2024 – Oct 2024',
+    description: 'Spearheaded digital transformation, automating key financial and procurement processes (80% improvement). Owned technology development and delivery across multiple stacks and PaaS platforms.',
   },
   {
     role: 'Software Engineer',
     company: 'Space Matrix',
-    period: 'November 2023 - April 2024',
-    description: 'Led the redesign & refactoring of the company\'s official website, ensuring accessibility in multiple languages. Integrated GSAP and Framer Motion for enhanced user engagement.',
+    period: 'Nov 2023 – Apr 2024',
+    description: "Led redesign and refactoring of the company's official website with multi-language accessibility. Integrated GSAP and Framer Motion for engagement.",
   },
   {
     role: 'Software Developer',
     company: 'Widas Concepts India Private Limited',
-    period: 'October 2021 - November 2023',
-    description: 'Enhanced Cidaas (CIAM) solution with OAuth 2.0/OIDC. Focused on SSO, MFA, and consent management. Created user-friendly Stoplight documentation for APIs and educational video content.',
+    period: 'Oct 2021 – Nov 2023',
+    description: 'Enhanced Cidaas (CIAM) with OAuth 2.0/OIDC, SSO, MFA, and consent management. Created Stoplight API docs and educational video content.',
   },
   {
     role: 'IoT Intern',
     company: 'Widas Concepts India Private Limited',
-    period: 'July 2021 - September 2021',
-    description: 'Worked on REST, Kafka, Docker, and contributed to CIAM with OAuth 2.0, OpenID Connect, ISO27001 certified.',
+    period: 'Jul 2021 – Sep 2021',
+    description: 'REST, Kafka, Docker; contributed to CIAM with OAuth 2.0, OpenID Connect (ISO27001 certified).',
   },
   {
     role: 'Internship Trainee',
     company: 'Tech Fortune Technologies',
-    period: 'July 2020 - September 2020',
-    description: 'Learned Python and Machine Learning basics, applied knowledge in ML using Python, successfully completed a small-scale project.',
+    period: 'Jul 2020 – Sep 2020',
+    description: 'Python and ML basics; delivered a small-scale ML project.',
   },
   {
     role: 'Web Development Intern',
     company: 'Computronics Belgaum',
-    period: 'November 2017 - April 2018',
-    description: 'Made significant contributions to developing PHP-based web applications for clients.',
+    period: 'Nov 2017 – Apr 2018',
+    description: 'Developed PHP-based web applications for clients.',
   },
 ];
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-32 relative overflow-hidden z-10">
-      <div className="container mx-auto px-4">
+    <section id="experience" className="py-24 md:py-32 relative z-10">
+      <div className="content-max">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-20 text-center"
+          viewport={viewportOnce}
+          transition={{ duration: 0.4 }}
+          className="grid md:grid-cols-[auto_1fr] gap-12 md:gap-20 mb-16"
         >
-          <h2 className="text-4xl md:text-6xl font-display font-bold mb-6 tracking-tight">
-            Professional <span className="text-electric-blue-400">Journey</span>
+          <h2 className="section-heading font-mono text-lg md:text-xl">
+            <span className="text-white/40 font-sans font-normal mr-2">03.</span>
+            Professional <span className="text-gradient-gold">Journey</span>
           </h2>
+          <p className="text-slate-400 text-lg max-w-2xl">
+            Where I've worked and what I shipped.
+          </p>
         </motion.div>
 
-        <div className="space-y-12 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-electric-blue-500/50 before:to-transparent">
-          {experiences.map((exp, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active"
-            >
-              <div className="flex items-center justify-center w-10 h-10 rounded-full border border-electric-blue-500/30 bg-navy-900 group-[.is-active]:border-electric-blue-500 shadow-[0_0_15px_rgba(6,182,212,0.5)] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
-                <div className="w-3 h-3 bg-electric-blue-400 rounded-full shadow-[0_0_10px_rgba(6,182,212,0.8)]"></div>
-              </div>
-              
-              <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] glass-card p-8 rounded-2xl relative overflow-hidden group-hover:bg-slate-800/60 transition-all">
-                <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-electric-blue-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
-                  <h3 className="text-xl font-bold text-white font-display">{exp.role}</h3>
-                  <span className="text-sm text-electric-blue-300 font-mono bg-electric-blue-500/10 px-3 py-1 rounded-full border border-electric-blue-500/20">{exp.period}</span>
+        <div className="relative pl-0 md:pl-2">
+          <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-gold-500/40 via-electric-blue-500/50 to-transparent rounded-full" />
+          <ul className="space-y-6">
+            {experiences.map((exp, index) => (
+              <motion.li
+                key={index}
+                initial={{ opacity: 0, x: -16 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={viewportOnce}
+                transition={{ delay: index * 0.04, duration: 0.35 }}
+                className="relative pl-8 md:pl-10 group"
+              >
+                <span className="absolute left-0 top-6 w-3 h-3 rounded-full bg-electric-blue-500 border-2 border-slate-900 -translate-x-[7px] group-hover:bg-electric-blue-400 group-hover:shadow-[0_0_16px_rgba(0,215,230,0.9)] transition-all z-10" />
+                <div className="rounded-2xl border border-white/10 bg-slate-900/50 p-6 md:p-7 hover:border-gold-500/20 hover:bg-slate-800/40 transition-colors">
+                  <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
+                    <h3 className="font-display font-bold text-white text-lg">{exp.role}</h3>
+                    <span className="text-sm font-mono text-gold-400/90">{exp.period}</span>
+                  </div>
+                  <p className="text-gold-400/90 font-medium text-sm mb-3">{exp.company}</p>
+                  <p className="text-slate-400 text-sm leading-relaxed max-w-2xl">{exp.description}</p>
                 </div>
-                <div className="text-gold-400 font-medium mb-4 text-lg">{exp.company}</div>
-                <p className="text-gray-400 leading-relaxed font-light">
-                  {exp.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
+              </motion.li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

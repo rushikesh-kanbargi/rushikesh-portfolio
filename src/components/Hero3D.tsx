@@ -1,41 +1,68 @@
 import { motion } from 'framer-motion';
+import TypingEffect from './TypingEffect';
 
 export default function Hero3D() {
   return (
-    <div className="relative w-full h-screen overflow-hidden flex items-center justify-center">
-      {/* Canvas removed to use global background */}
-
-      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none">
+    <div className="relative w-full min-h-screen flex items-center justify-center pt-20 lg:pt-0">
+      <div className="content-max w-full text-center lg:text-left">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-          className="text-center px-4"
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="max-w-3xl"
         >
-          <h1 className="text-6xl md:text-8xl font-display font-bold text-white mb-6 tracking-tight drop-shadow-2xl">
-            RUSHIKESH KANBARGI <br />
-            <span className="text-gradient-gold">
-              Senior SDE
-            </span>
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-10 font-light leading-relaxed">
-            Crafting <span className="text-electric-blue-400 font-medium">high-performance</span> web applications with precision and passion. 
-            Full-stack expertise meets premium design.
+          <p className="font-mono text-electric-blue-400 text-sm md:text-base mb-4">
+            Hi, my name is
           </p>
-          
-          <div className="flex flex-col md:flex-row gap-6 justify-center pointer-events-auto">
-            <a href="#projects" className="px-10 py-4 bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 font-bold rounded-full hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] transition-all transform hover:scale-105 text-lg">
-              View Projects
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold tracking-tight mb-2">
+            <span className="text-white">Rushikesh Kanbargi.</span>
+          </h1>
+          <p className="text-lg md:text-xl font-display font-semibold text-gradient-gold mb-4">Senior SDE</p>
+          <TypingEffect />
+          <p className="text-slate-400 text-lg md:text-xl max-w-xl leading-relaxed mb-6">
+            I'm a Senior Software Engineer focused on high-performance web applications,
+            from scalable backends to polished UIs. Currently building cybersecurity tools
+            and design systems.
+          </p>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-1 mb-4 text-sm text-slate-500 font-mono">
+            <span>5+ years experience</span>
+            <span className="text-white/30">·</span>
+            <span>10+ projects shipped</span>
+            <span className="text-white/30">·</span>
+            <span>Full-stack &amp; security</span>
+          </div>
+          <p className="mb-10 text-sm text-slate-500 font-mono">
+            <span className="text-electric-blue-500/90">Now:</span> Building TARA · Reading docs &amp; RFCs · Learning security &amp; infra
+          </p>
+          <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 rounded-lg bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 font-semibold hover:from-gold-300 hover:to-gold-500 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-[0_0_24px_rgba(212,175,55,0.4)]"
+            >
+              Download CV
             </a>
-            <a href="#contact" className="px-10 py-4 glass-panel text-white font-bold rounded-full hover:bg-white/10 hover:border-electric-blue-500/50 transition-all transform hover:scale-105 text-lg backdrop-blur-md">
-              Contact Me
+            <a
+              href="#contact"
+              className="px-6 py-3 rounded-lg border-2 border-gold-500/80 text-gold-400 font-semibold hover:bg-gold-500/10 transition-all duration-300 hover:scale-[1.02]"
+            >
+              Hire Me
             </a>
           </div>
         </motion.div>
       </div>
-      
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-gray-500">
-        <span className="text-xs uppercase tracking-[0.3em] text-electric-blue-500/70">Scroll to Explore</span>
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+        <span className="text-xs font-mono text-slate-500 uppercase tracking-widest">
+          Scroll
+        </span>
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+          className="w-6 h-10 rounded-full border-2 border-gold-500/50 flex justify-center pt-2"
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-gold-500" />
+        </motion.div>
       </div>
     </div>
   );
