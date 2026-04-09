@@ -2,72 +2,7 @@ import { motion } from 'framer-motion';
 import { viewportOnce, staggerContainer, staggerItem, slideRight, drawLine } from '../lib/motion';
 import { GridBackground } from '@/components/ui/grid-background';
 import { Meteors } from '@/components/ui/meteors';
-
-const experiences = [
-  {
-    role: 'Senior Software Engineer',
-    company: 'Vayavya Labs Pvt. Ltd.',
-    period: 'Oct 2024 – Present',
-    duration: '< 1 yr',
-    description: 'Designing and developing TARA — a web-based Threat Analysis & Risk Assessment tool for ISO 21434-compliant automotive cybersecurity, covering vulnerability assessment, attack path modeling, and risk scoring. Built interactive React Flow dashboards for visual threat modeling. Integrated AI-powered APIs (Gemini), implemented programmatic PDF exports, and shipped Stripe payment integration for subscription management.',
-    tags: ['React Flow', 'Node.js', 'Gemini AI', 'Stripe', 'TypeScript'],
-    status: 'ACTIVE',
-  },
-  {
-    role: 'Senior Software Engineer',
-    company: 'Space Matrix',
-    period: 'May 2024 – Oct 2024',
-    duration: '6 mos',
-    description: 'Spearheaded company-wide digital transformation by automating key financial and procurement workflows, achieving an 80% reduction in manual processing time. Owned end-to-end technology development across multiple stacks and PaaS platforms, coordinating cross-functional teams and defining technical architecture for scalable enterprise applications.',
-    tags: ['Enterprise', 'Automation', 'PaaS', 'Architecture'],
-    status: 'COMPLETE',
-  },
-  {
-    role: 'Software Engineer',
-    company: 'Space Matrix',
-    period: 'Nov 2023 – Apr 2024',
-    duration: '6 mos',
-    description: "Led the complete redesign and refactoring of Space Matrix's official website, implementing multi-language accessibility (i18n) for global clients. Integrated GSAP and Framer Motion for enhanced UI animations and micro-interactions, improving user engagement. Managed cross-browser compatibility and frontend performance throughout.",
-    tags: ['React', 'GSAP', 'Framer Motion', 'i18n'],
-    status: 'COMPLETE',
-  },
-  {
-    role: 'Software Developer',
-    company: 'Widas Concepts India Private Limited',
-    period: 'Oct 2021 – Nov 2023',
-    duration: '2 yrs',
-    description: 'Built and maintained Cidaas — a cloud-native Identity & Access Management (CIAM) platform — implementing OAuth 2.0, OpenID Connect (OIDC), SSO, MFA, and consent management for enterprise clients. Created comprehensive Stoplight API documentation and developer onboarding content. Operated in an ISO 27001 certified security environment.',
-    tags: ['OAuth 2.0', 'OIDC', 'SSO', 'MFA', 'Angular'],
-    status: 'COMPLETE',
-  },
-  {
-    role: 'IoT Intern',
-    company: 'Widas Concepts India Private Limited',
-    period: 'Jul 2021 – Sep 2021',
-    duration: '3 mos',
-    description: 'Built REST APIs and worked with Kafka message queues and Docker containerization. Contributed to CIAM identity features with OAuth 2.0 and OpenID Connect in an ISO 27001 certified environment.',
-    tags: ['Kafka', 'Docker', 'REST', 'OAuth 2.0'],
-    status: 'COMPLETE',
-  },
-  {
-    role: 'Internship Trainee',
-    company: 'Tech Fortune Technologies',
-    period: 'Jul 2020 – Sep 2020',
-    duration: '3 mos',
-    description: 'Learned Python fundamentals and applied machine learning concepts to deliver a small-scale classification project.',
-    tags: ['Python', 'Machine Learning'],
-    status: 'COMPLETE',
-  },
-  {
-    role: 'Web Development Intern',
-    company: 'Computronics Belgaum',
-    period: 'Nov 2017 – Apr 2018',
-    duration: '6 mos',
-    description: 'Developed PHP-based web applications for client projects, gaining hands-on experience with server-side scripting, HTML/CSS, and database-driven web development.',
-    tags: ['PHP', 'HTML/CSS', 'MySQL'],
-    status: 'COMPLETE',
-  },
-];
+import { experiences } from '../data/experiences';
 
 export default function Experience() {
   return (

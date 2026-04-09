@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import ScrollProgress from './components/ScrollProgress';
@@ -18,10 +18,14 @@ import LoadingScreen from './components/LoadingScreen';
 import CursorGlow from './components/CursorGlow';
 import { useKonamiCode } from './hooks/useKonamiCode';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
-import ResumeBuilder from './resume-builder/ResumeBuilder';
-import { ToolsPage } from './pages/ToolsPage';
 import SeoHead from './components/SeoHead';
 import { AppLayout } from './layouts/AppLayout';
+
+// Lazy loaded routes mapping to chunky dependencies
+const ToolsPage = lazy(() => import('./pages/ToolsPage').then(module => ({ default: module.ToolsPage })));
+const ResumeBuilder = lazy(() => import('./resume-builder/ResumeBuilder'));
+
+// ... schema block remains the same ...
 
 const portfolioSchema = [
   {
@@ -100,6 +104,18 @@ function Portfolio() {
   );
 }
 
+// Simple fallback component for Suspense boundaries
+function RouteFallback() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-slate-950 font-mono text-electric-blue-500">
+      <div className="flex items-center gap-3">
+        <span className="w-4 h-4 border-2 border-electric-blue-500 border-t-transparent rounded-full animate-spin" />
+        LOADING_MODULE...
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [loaded, setLoaded] = useState(false);
 
@@ -107,13 +123,15 @@ function App() {
     <>
       <CursorGlow />
       {!loaded && <LoadingScreen onComplete={() => setLoaded(true)} />}
-      <Routes>
-        <Route path="/" element={<Portfolio />} />
-        <Route element={<AppLayout />}>
-          <Route path="/tools/*" element={<ToolsPage />} />
-          <Route path="/resume-builder/*" element={<ResumeBuilder />} />
-        </Route>
-      </Routes>
+      <Suspense fallback={<RouteFallback />}>
+        <Routes>
+          <Route path="/" element={<Portfolio />} />
+          <Route element={<AppLayout />}>
+            <Route path="/tools/*" element={<ToolsPage />} />
+            <Route path="/resume-builder/*" element={<ResumeBuilder />} />
+          </Route>
+        </Routes>
+      </Suspense>
     </>
   );
 }

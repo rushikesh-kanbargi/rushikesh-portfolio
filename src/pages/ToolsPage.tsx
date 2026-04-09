@@ -1,25 +1,27 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { JSONFormatter } from '../tools/JSONFormatter';
-import { RegexTester } from '../tools/RegexTester';
-import { MarkdownEditor } from '../tools/MarkdownEditor';
-import { CodeSnippets } from '../tools/CodeSnippets';
-import { SystemDesignBoard } from '../developer/SystemDesignBoard';
-import { ApiClient } from '../developer/ApiClient';
-import { DiffChecker } from '../developer/DiffChecker';
-import { ImageOptimizer } from '../tools/ImageOptimizer';
-import { CoverLetterGenerator } from '../career/CoverLetterGenerator';
-import { JobTracker } from '../career/JobTracker';
-import { MockInterview } from '../career/MockInterview';
-import { PomodoroTimer } from '../productivity/PomodoroTimer';
-import { TaskManager } from '../productivity/TaskManager';
-import { NoteTaker } from '../productivity/NoteTaker';
-import { HabitTracker } from '../productivity/HabitTracker';
-import { Blog } from '../branding/TechBlog';
-import { AskMyAI } from '../branding/AskMyAI';
-import { PlatformHome } from './PlatformHome';
-import { Dashboard } from './Dashboard';
 import SeoHead from '../components/SeoHead';
+
+// Lazy load tools to prevent mega-bundle bloat
+const JSONFormatter = lazy(() => import('../tools/JSONFormatter').then(m => ({ default: m.JSONFormatter })));
+const RegexTester = lazy(() => import('../tools/RegexTester').then(m => ({ default: m.RegexTester })));
+const MarkdownEditor = lazy(() => import('../tools/MarkdownEditor').then(m => ({ default: m.MarkdownEditor })));
+const CodeSnippets = lazy(() => import('../tools/CodeSnippets').then(m => ({ default: m.CodeSnippets })));
+const SystemDesignBoard = lazy(() => import('../developer/SystemDesignBoard').then(m => ({ default: m.SystemDesignBoard })));
+const ApiClient = lazy(() => import('../developer/ApiClient').then(m => ({ default: m.ApiClient })));
+const DiffChecker = lazy(() => import('../developer/DiffChecker').then(m => ({ default: m.DiffChecker })));
+const ImageOptimizer = lazy(() => import('../tools/ImageOptimizer').then(m => ({ default: m.ImageOptimizer })));
+const CoverLetterGenerator = lazy(() => import('../career/CoverLetterGenerator').then(m => ({ default: m.CoverLetterGenerator })));
+const JobTracker = lazy(() => import('../career/JobTracker').then(m => ({ default: m.JobTracker })));
+const MockInterview = lazy(() => import('../career/MockInterview').then(m => ({ default: m.MockInterview })));
+const PomodoroTimer = lazy(() => import('../productivity/PomodoroTimer').then(m => ({ default: m.PomodoroTimer })));
+const TaskManager = lazy(() => import('../productivity/TaskManager').then(m => ({ default: m.TaskManager })));
+const NoteTaker = lazy(() => import('../productivity/NoteTaker').then(m => ({ default: m.NoteTaker })));
+const HabitTracker = lazy(() => import('../productivity/HabitTracker').then(m => ({ default: m.HabitTracker })));
+const Blog = lazy(() => import('../branding/TechBlog').then(m => ({ default: m.Blog })));
+const AskMyAI = lazy(() => import('../branding/AskMyAI').then(m => ({ default: m.AskMyAI })));
+const PlatformHome = lazy(() => import('./PlatformHome').then(m => ({ default: m.PlatformHome })));
+const Dashboard = lazy(() => import('./Dashboard').then(m => ({ default: m.Dashboard })));
 
 const BASE_URL = 'https://rushikesh-portfolio-delta.vercel.app';
 
