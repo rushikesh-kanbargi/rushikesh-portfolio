@@ -10,7 +10,7 @@ const socials = [
   { icon: Mail, href: 'mailto:rushikesh.kanbargi@protonmail.com', label: 'Email', hex: '0x4D4C' },
 ];
 
-type FormState = 'idle' | 'sending' | 'sent';
+type FormState = 'idle' | 'sending' | 'sent' | 'error';
 
 // Animated grid lines for background
 function ContactGrid() {
@@ -152,12 +152,31 @@ function ContactForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setState('sending');
-    await new Promise((r) => setTimeout(r, 1800));
-    setState('sent');
-    setTimeout(() => {
-      setState('idle');
-      setForm({ name: '', email: '', message: '' });
-    }, 6000);
+    
+    try {
+      const response = await fetch('https://formspree.io/f/mqkenbbw', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(form)
+      });
+      
+      if (response.ok) {
+        setState('sent');
+        setTimeout(() => {
+          setState('idle');
+          setForm({ name: '', email: '', message: '' });
+        }, 6000);
+      } else {
+        setState('error');
+        setTimeout(() => setState('idle'), 4000);
+      }
+    } catch (err) {
+      setState('error');
+      setTimeout(() => setState('idle'), 4000);
+    }
   }
 
   const inputBase =
@@ -229,6 +248,61 @@ function ContactForm() {
                     {cursor ? (
                       <>
                         {'> Connection maintained_'}
+                        <span className="animate-pulse">▮</span>
+                      </>
+                    ) : (
+                      text
+                    )}
+                  </motion.p>
+                ))}
+              </div>
+            </motion.div>
+          ) : state === 'error' ? (
+            <motion.div
+              key="error"
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.35, ease: [0.19, 1, 0.22, 1] as never }}
+              className="space-y-4 font-mono text-sm"
+            >
+              <motion.div
+                className="flex items-center gap-3 text-red-400 text-base"
+                initial={{ x: -10, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.1 }}
+              >
+                <div className="w-5 h-5 flex items-center justify-center border-2 border-red-400 rounded-full text-xs font-bold">!</div>
+                <span className="text-red-400 font-bold tracking-widest" style={{ textShadow: '0 0 12px rgba(248,113,113,0.5)' }}>
+                  TRANSMISSION_FAILED
+                </span>
+              </motion.div>
+
+              <div
+                className="p-4 space-y-1.5 text-xs overflow-hidden"
+                style={{
+                  border: '1px solid rgba(248,113,113,0.3)',
+                  background: 'rgba(248,113,113,0.05)',
+                  clipPath: 'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%)',
+                }}
+              >
+                {[
+                  { delay: 0.2, color: 'text-red-400', text: '> ERR_CONNECTION_REFUSED' },
+                  { delay: 0.45, color: 'text-slate-400', text: '> Form submission endpoint unreachable' },
+                  { delay: 0.7, color: 'text-slate-400', text: '> Please try email directly:' },
+                  { delay: 0.95, color: 'text-white', text: '> rushikesh.kanbargi@protonmail.com' },
+                  { delay: 1.2, color: 'text-red-400', text: null, cursor: true },
+                ].map(({ delay, color, text, cursor }, i) => (
+                  <motion.p
+                    key={i}
+                    initial={{ opacity: 0, x: -6 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay, duration: 0.3 }}
+                    className={color}
+                  >
+                    {cursor ? (
+                      <>
+                        {'> Re-initializing sequence_'}
                         <span className="animate-pulse">▮</span>
                       </>
                     ) : (

@@ -349,15 +349,60 @@ export default function Hero3D() {
         </div>
 
         {/* ════ Robot — tucked next to copy, vignette only at outer edges (no center “split line”) ════ */}
-        <div ref={robotRef} className="relative z-[5] hidden h-[min(78vh,760px)] w-[min(48vw,520px)] max-w-full flex-shrink-0 lg:flex lg:items-center lg:justify-center">
+        <div ref={robotRef} className="relative z-[5] w-full mt-10 md:mt-0 h-[300px] lg:h-[min(78vh,760px)] lg:w-[min(48vw,520px)] max-w-full flex-shrink-0 flex items-center justify-center lg:justify-center">
           <div
             className="absolute inset-0 rounded-[50%] opacity-[0.45] blur-3xl pointer-events-none scale-110"
             style={{
-              background: 'radial-gradient(ellipse 65% 60% at 50% 50%, rgba(0,243,255,0.14), transparent 72%)',
+              background: 'radial-gradient(ellipse 65% 60% at 50% 50%, rgba(var(--accent), 0.14), transparent 72%)',
             }}
           />
+          
+          {/* Mobile Fallback - Animated Mesh SVG */}
+          <div className="absolute inset-0 flex items-center justify-center lg:hidden">
+            <svg
+              viewBox="0 0 400 400"
+              className="w-full max-w-[280px] opacity-60 mix-blend-screen"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <linearGradient id="cyber-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="rgba(var(--accent), 0.8)" />
+                  <stop offset="100%" stopColor="rgba(212, 175, 55, 0.5)" />
+                </linearGradient>
+                <filter id="glow">
+                  <feGaussianBlur stdDeviation="15" result="coloredBlur" />
+                  <feMerge>
+                    <feMergeNode in="coloredBlur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+              <motion.path
+                d="M200,50 L350,125 L350,275 L200,350 L50,275 L50,125 Z"
+                fill="none"
+                stroke="url(#cyber-grad)"
+                strokeWidth="2"
+                filter="url(#glow)"
+                initial={{ rotate: 0, scale: 0.8 }}
+                animate={{ rotate: 360, scale: [0.8, 0.9, 0.8] }}
+                transition={{ duration: 40, ease: "linear", repeat: Infinity, scale: { duration: 4, repeat: Infinity, ease: "easeInOut" } }}
+              />
+              <motion.path
+                d="M200,80 L320,140 L320,260 L200,320 L80,260 L80,140 Z"
+                fill="none"
+                stroke="rgba(var(--accent), 0.4)"
+                strokeWidth="1"
+                initial={{ rotate: 360 }}
+                animate={{ rotate: 0 }}
+                transition={{ duration: 25, ease: "linear", repeat: Infinity }}
+              />
+              <circle cx="200" cy="200" r="4" fill="rgba(var(--accent), 1)" />
+            </svg>
+          </div>
+
+          {/* Desktop Spline Scene */}
           <div
-            className="relative h-full w-full overflow-visible"
+            className="relative h-full w-full overflow-visible hidden lg:block"
             style={{
               maskImage: 'radial-gradient(ellipse 78% 82% at 58% 48%, #000 18%, transparent 86%)',
               WebkitMaskImage: 'radial-gradient(ellipse 78% 82% at 58% 48%, #000 18%, transparent 86%)',
@@ -365,7 +410,7 @@ export default function Hero3D() {
           >
             <SplineScene
               scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-              className="h-full w-full min-h-[420px] scale-[0.92] lg:min-h-0 lg:scale-100"
+              className="h-full w-full min-h-[420px] scale-100"
             />
           </div>
         </div>
