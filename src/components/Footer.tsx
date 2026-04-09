@@ -324,10 +324,11 @@ function ContactForm() {
             >
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="terminal-label mb-1.5 flex items-center gap-1">
+                  <label htmlFor="contact-name" className="terminal-label mb-1.5 flex items-center gap-1">
                     <span className="text-electric-blue-500/40">&gt;</span> NAME
                   </label>
                   <input
+                    id="contact-name"
                     type="text"
                     name="name"
                     value={form.name}
@@ -340,10 +341,11 @@ function ContactForm() {
                   />
                 </div>
                 <div>
-                  <label className="terminal-label mb-1.5 flex items-center gap-1">
+                  <label htmlFor="contact-email" className="terminal-label mb-1.5 flex items-center gap-1">
                     <span className="text-electric-blue-500/40">&gt;</span> EMAIL
                   </label>
                   <input
+                    id="contact-email"
                     type="email"
                     name="email"
                     value={form.email}
@@ -358,10 +360,11 @@ function ContactForm() {
               </div>
 
               <div>
-                <label className="terminal-label mb-1.5 flex items-center gap-1">
+                <label htmlFor="contact-message" className="terminal-label mb-1.5 flex items-center gap-1">
                   <span className="text-electric-blue-500/40">&gt;</span> MESSAGE
                 </label>
                 <textarea
+                  id="contact-message"
                   name="message"
                   value={form.message}
                   onChange={handleChange}
