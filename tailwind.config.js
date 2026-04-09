@@ -49,6 +49,31 @@ export default {
         display: ['Outfit', 'Inter', 'sans-serif'],
         mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
       },
+      keyframes: {
+        'gradient-xy': {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        'border-shimmer': {
+          '0%': { backgroundPosition: '200% center' },
+          '100%': { backgroundPosition: '-200% center' },
+        },
+        'cta-shimmer': {
+          '0%': { transform: 'translateX(-130%) skewX(-18deg)' },
+          '100%': { transform: 'translateX(230%) skewX(-18deg)' },
+        },
+      },
+      animation: {
+        'gradient-xy': 'gradient-xy 8s ease infinite',
+        marquee: 'marquee var(--marquee-duration, 40s) linear infinite',
+        'marquee-reverse': 'marquee var(--marquee-duration, 40s) linear infinite reverse',
+        'border-shimmer': 'border-shimmer 2.5s linear infinite',
+        'cta-shimmer': 'cta-shimmer 2.85s ease-in-out infinite',
+      },
     },
   },
   plugins: [],

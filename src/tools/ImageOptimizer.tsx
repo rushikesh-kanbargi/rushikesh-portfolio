@@ -142,12 +142,12 @@ export const ImageOptimizer: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
-      <div className="max-w-6xl mx-auto">
+    <>
+      <div>
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
-          <Link to="/tools" className="p-2 hover:bg-slate-200 rounded-full transition-colors text-slate-600">
-            <ArrowLeft size={24} />
+          <Link to="/tools" className="p-2 hover:bg-slate-200 rounded-lg transition-colors text-slate-600">
+            <ArrowLeft size={20} />
           </Link>
           <div className="flex items-center gap-3">
             <div className="p-2 bg-pink-500 rounded-lg text-white shadow-md">
@@ -323,6 +323,6 @@ export const ImageOptimizer: React.FC = () => {
 
       {/* Hidden Canvas for Processing */}
       <canvas ref={canvasRef} className="hidden" />
-    </div>
+    </>
   );
 };

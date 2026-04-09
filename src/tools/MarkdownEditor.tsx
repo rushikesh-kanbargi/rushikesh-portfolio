@@ -55,19 +55,18 @@ export const MarkdownEditor: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
-      <div className="max-w-7xl mx-auto h-[calc(100vh-140px)] flex flex-col">
+    <div className="flex flex-col" style={{ height: 'calc(100vh - 120px)' }}>
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 shrink-0">
-          <div className="flex items-center gap-4">
-            <Link to="/tools" className="p-2 hover:bg-slate-200 rounded-full transition-colors text-slate-600">
-              <ArrowLeft size={24} />
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 shrink-0">
+          <div className="flex items-center gap-3">
+            <Link to="/tools" className="p-2 hover:bg-slate-200 rounded-lg transition-colors text-slate-600">
+              <ArrowLeft size={20} />
             </Link>
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-blue-500 rounded-lg text-white shadow-md">
-                <FileCode size={24} />
+              <div className="p-2 bg-blue-500 rounded-lg text-white shadow-sm">
+                <FileCode size={20} />
               </div>
-              <h1 className="text-2xl font-bold text-slate-900">Markdown Editor</h1>
+              <h1 className="text-xl font-bold text-slate-900">Markdown Editor</h1>
             </div>
           </div>
           
@@ -165,7 +164,6 @@ export const MarkdownEditor: React.FC = () => {
             </div>
           )}
         </div>
-      </div>
     </div>
   );
 };

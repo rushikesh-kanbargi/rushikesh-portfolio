@@ -4,13 +4,13 @@ import { viewportOnce } from '../lib/motion';
 
 const lines: { delay: number; content: React.ReactNode; type: 'command' | 'output' }[] = [
   { delay: 0, type: 'command', content: '~ $ whoami' },
-  { delay: 400, type: 'output', content: 'rushikesh' },
+  { delay: 400, type: 'output', content: 'rushikesh-kanbargi  (senior-sde @ vayavya-labs)' },
   { delay: 900, type: 'command', content: '~ $ cat now.txt' },
-  { delay: 1300, type: 'output', content: 'Building: TARA & design systems' },
-  { delay: 1700, type: 'output', content: 'Reading: docs & RFCs' },
-  { delay: 2100, type: 'output', content: 'Learning: security & infra' },
+  { delay: 1300, type: 'output', content: 'role: Senior Software Development Engineer' },
+  { delay: 1700, type: 'output', content: 'building: TARA — ISO 21434 automotive cybersecurity tool' },
+  { delay: 2100, type: 'output', content: 'stack: React · TypeScript · Node.js · OAuth 2.0 · Gemini AI' },
   { delay: 2700, type: 'command', content: '~ $ ls ~/projects | head -4' },
-  { delay: 3100, type: 'output', content: 'ai-ppt-builder  sign-language-interpreter  tara  cidaas-iam' },
+  { delay: 3100, type: 'output', content: 'tara  cidaas-iam  ai-resume-builder  developer-tools-suite' },
   { delay: 3800, type: 'command', content: '~ $ _' },
 ];
 

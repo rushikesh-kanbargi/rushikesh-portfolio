@@ -1,0 +1,32 @@
+User-agent: *
+Allow: /
+Disallow: /resume-builder/dashboard
+Disallow: /resume-builder/editor
+Disallow: /resume-builder/settings
+Disallow: /dashboard
+Disallow: /editor
+Disallow: /settings
+
+# AI crawlers — explicitly allowed
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+Sitemap: https://rushikesh-portfolio-delta.vercel.app/sitemap.xml

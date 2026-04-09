@@ -102,18 +102,17 @@ export const RegexTester: React.FC = () => {
   }, [text, pattern, flags, result]);
 
   return (
-    <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
-      <div className="max-w-7xl mx-auto">
+    <div className="space-y-0">
         {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
-          <Link to="/tools" className="p-2 hover:bg-slate-200 rounded-full transition-colors text-slate-600">
-            <ArrowLeft size={24} />
+        <div className="flex items-center gap-4 mb-6">
+          <Link to="/tools" className="p-2 hover:bg-slate-200 rounded-lg transition-colors text-slate-600">
+            <ArrowLeft size={20} />
           </Link>
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-purple-500 rounded-lg text-white shadow-md">
-              <Code size={24} />
+            <div className="p-2 bg-purple-500 rounded-lg text-white shadow-sm">
+              <Code size={20} />
             </div>
-            <h1 className="text-2xl font-bold text-slate-900">Regex Tester</h1>
+            <h1 className="text-xl font-bold text-slate-900">Regex Tester</h1>
           </div>
         </div>
 
@@ -322,7 +321,6 @@ export const RegexTester: React.FC = () => {
             )}
           </div>
         </div>
-      </div>
     </div>
   );
 };

@@ -1,102 +1,228 @@
 import { motion } from 'framer-motion';
 import { Layout, Server, Smartphone, Terminal } from 'lucide-react';
-import { viewportOnce } from '../lib/motion';
+import { viewportOnce, staggerContainer, staggerItem, staggerContainerFast, slideRight } from '../lib/motion';
+import { Marquee } from '@/components/ui/marquee';
+import { OrbitingCircles } from '@/components/ui/orbiting-circles';
 
 const skills = [
-  { name: 'Top Skills', icon: Layout, items: ['Artificial Neural Networks', 'Neural Networks', 'Image Processing', 'Full Stack Development', 'CI/CD'] },
-  { name: 'Frontend & Frameworks', icon: Smartphone, items: ['Angular', 'ReactJS', 'NextJS', 'VueJS', 'Tailwind', 'Material UI', 'Bootstrap', 'RxJS/NgRx'] },
-  { name: 'Backend & Database', icon: Server, items: ['Node.js', 'Express.js', 'Python3', 'Java', 'MongoDB', 'PostgreSQL', 'Firebase', 'SQL/NoSQL'] },
-  { name: 'Tools & Platforms', icon: Terminal, items: ['Git', 'Docker', 'AWS', 'VS Code', 'Postman', 'Zoho Suite', 'Browser Stack'] },
+  {
+    name: 'Top Skills',
+    icon: Layout,
+    code: 'MOD_CORE',
+    color: '#a78bfa',
+    items: ['TypeScript', 'React', 'Full Stack Development', 'OAuth 2.0 / OIDC', 'CI/CD', 'System Design', 'React Flow'],
+  },
+  {
+    name: 'Frontend & Frameworks',
+    icon: Smartphone,
+    code: 'MOD_FE',
+    color: '#00f3ff',
+    items: ['ReactJS', 'NextJS', 'Angular', 'VueJS', 'Tailwind CSS', 'Framer Motion', 'Material UI', 'RxJS/NgRx'],
+  },
+  {
+    name: 'Backend & Database',
+    icon: Server,
+    code: 'MOD_BE',
+    color: '#34d399',
+    items: ['Node.js', 'Express.js', 'Python3', 'Kafka', 'MongoDB', 'PostgreSQL', 'Firebase', 'REST APIs'],
+  },
+  {
+    name: 'Tools & Platforms',
+    icon: Terminal,
+    code: 'MOD_OPS',
+    color: '#fbbf24',
+    items: ['Git', 'Docker', 'AWS', 'Vercel', 'Postman', 'Stripe', 'Gemini AI', 'Browser Stack'],
+  },
 ];
+
+const marqueeLabels = [
+  ...new Set(skills.flatMap((s) => s.items)),
+  'SSO', 'MFA', 'ISO 21434', 'GSAP', 'i18n',
+];
+
+const tagVariants = {
+  hidden: { opacity: 0, scale: 0.8, y: 6 },
+  visible: (i: number) => ({
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: { delay: i * 0.04, duration: 0.35, ease: [0.19, 1, 0.22, 1] as never },
+  }),
+};
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-24 md:py-32 relative z-10">
+    <section id="skills" className="py-28 md:py-36 relative z-10">
       <div className="content-max">
+
+        {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial="hidden"
+          whileInView="visible"
           viewport={viewportOnce}
-          transition={{ duration: 0.4 }}
-          className="grid md:grid-cols-[auto_1fr] gap-12 md:gap-20 mb-16"
+          variants={staggerContainer}
+          className="grid md:grid-cols-[260px_1fr] gap-16 md:gap-24 mb-16"
         >
-          <h2 className="section-heading font-mono text-lg md:text-xl">
-            <span className="text-white/40 font-sans font-normal mr-2">02.</span>
-            Technical <span className="text-gradient-gold">Expertise</span>
-          </h2>
-          <p className="text-slate-400 text-lg max-w-2xl">
-            A focused set of technologies I use to ship scalable, high-quality products.
-          </p>
+          <motion.div variants={slideRight} className="shrink-0">
+            <p className="terminal-label mb-3">MODULE_02</p>
+            <h2
+              className="font-display font-black leading-none tracking-tighter"
+              style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
+            >
+              <span className="text-white/20 font-mono font-normal text-base block mb-1">02.</span>
+              Technical{' '}
+              <span className="text-gradient-gold">Expertise</span>
+            </h2>
+            <div className="mt-6 w-px h-24 bg-gradient-to-b from-gold-500/40 to-transparent" />
+            <div className="mt-10 hidden xl:flex justify-center">
+              <OrbitingCircles radius={72} duration={26}>
+                <Layout className="h-4 w-4" />
+                <Server className="h-4 w-4" />
+                <Smartphone className="h-4 w-4" />
+                <Terminal className="h-4 w-4" />
+              </OrbitingCircles>
+            </div>
+          </motion.div>
+
+          <motion.div variants={staggerItem} className="self-end space-y-6">
+            <p className="text-slate-400 text-lg leading-relaxed max-w-lg">
+              A focused set of technologies I use to ship scalable, high-quality products.
+            </p>
+            {/* Marquee */}
+            <div className="relative rounded-lg border border-white/10 bg-slate-950/40 overflow-hidden py-1 -mx-1 md:mx-0">
+              <Marquee duration={55} pauseOnHover>
+                {marqueeLabels.map((label) => (
+                  <span
+                    key={label}
+                    className="inline-flex items-center px-3 py-1.5 text-xs font-mono text-slate-400 border border-white/10 bg-white/[0.03] whitespace-nowrap"
+                    style={{ clipPath: 'polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 4px 100%, 0 calc(100% - 4px))' }}
+                  >
+                    {label}
+                  </span>
+                ))}
+              </Marquee>
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-slate-950 to-transparent z-10" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-slate-950 to-transparent z-10" />
+            </div>
+          </motion.div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={viewportOnce}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
-        >
+        {/* Skill cards grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-14">
           {skills.map((skill, i) => (
             <motion.div
               key={skill.name}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={viewportOnce}
-              transition={{ delay: i * 0.05, duration: 0.35 }}
-              className="p-6 rounded-xl border border-white/5 bg-slate-900/30 hover:border-gold-500/30 transition-colors"
+              transition={{ delay: i * 0.09, duration: 0.55, ease: [0.19, 1, 0.22, 1] }}
+              className="cyber-card group"
+              style={{ borderRadius: '4px' }}
             >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-lg bg-gold-500/10 flex items-center justify-center">
-                  <skill.icon className="w-5 h-5 text-gold-400" />
+              {/* Header */}
+              <div
+                className="flex items-center gap-3 px-5 py-3 border-b border-white/5 transition-colors duration-300"
+                style={{ background: `${skill.color}08` }}
+              >
+                <div
+                  className="w-8 h-8 flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110"
+                  style={{
+                    border: `1px solid ${skill.color}40`,
+                    background: `${skill.color}10`,
+                    clipPath: 'polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px))',
+                  }}
+                >
+                  <skill.icon className="w-4 h-4" style={{ color: skill.color }} />
                 </div>
-                <h3 className="font-display font-bold text-white">{skill.name}</h3>
+                <h3 className="font-mono font-bold text-white text-sm flex-1">{skill.name}</h3>
+                <span
+                  className="font-mono text-[9px] tracking-widest uppercase px-2 py-0.5"
+                  style={{ color: `${skill.color}80`, border: `1px solid ${skill.color}25` }}
+                >
+                  {skill.code}
+                </span>
               </div>
-              <ul className="flex flex-wrap gap-2">
-                {skill.items.map((item) => (
-                  <li
-                    key={item}
-                    className="px-3 py-1 rounded-full text-sm text-slate-400 bg-white/5 border border-white/5"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
+
+              {/* Tags with stagger animation */}
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={viewportOnce}
+                variants={staggerContainerFast}
+                className="p-5"
+              >
+                <div className="flex flex-wrap gap-2">
+                  {skill.items.map((item, j) => (
+                    <motion.span
+                      key={item}
+                      variants={tagVariants}
+                      custom={j}
+                      className="px-2.5 py-1 text-xs font-mono text-slate-400 border border-white/8 bg-white/[0.03] hover:text-white hover:border-white/25 transition-all duration-200 cursor-default"
+                      style={{
+                        clipPath: 'polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 4px 100%, 0 calc(100% - 4px))',
+                      }}
+                      whileHover={{
+                        borderColor: `${skill.color}50`,
+                        color: skill.color,
+                        background: `${skill.color}08`,
+                      }}
+                    >
+                      {item}
+                    </motion.span>
+                  ))}
+                </div>
+              </motion.div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
 
-        <div className="grid md:grid-cols-2 gap-8 mt-16">
+        {/* Education & Certifications */}
+        <div className="grid md:grid-cols-2 gap-5">
           <motion.div
-            initial={{ opacity: 0, x: -16 }}
+            initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="p-6 rounded-xl border border-white/5 bg-slate-900/30"
+            viewport={viewportOnce}
+            transition={{ duration: 0.55, ease: [0.19, 1, 0.22, 1] }}
+            className="cyber-card"
+            style={{ borderRadius: '4px' }}
           >
-            <h3 className="font-display font-bold text-white mb-4 flex items-center gap-2">
-              <span className="text-gold-500 font-mono text-sm">Edu</span>
-              Education
-            </h3>
-            <div className="pl-4 border-l-2 border-gold-500/30">
-              <h4 className="font-semibold text-white">Gogte Institute of Technology, Belgaum</h4>
-              <p className="text-gold-400/90 text-sm font-medium">BE, Computer Science & Engineering</p>
-              <p className="text-slate-500 text-sm font-mono mt-1">2018 – 2021</p>
+            <div className="flex items-center gap-2 px-5 py-3 border-b border-gold-500/10 bg-gold-500/[0.03]">
+              <span className="status-led-amber" />
+              <span className="font-mono text-xs font-bold text-gold-400/70 tracking-widest uppercase">Education</span>
+            </div>
+            <div className="p-5 border-l-2 border-gold-500/25 ml-5 my-4">
+              <h4 className="font-semibold text-white text-sm leading-snug">
+                Gogte Institute of Technology, Belgaum
+              </h4>
+              <p className="text-gold-400/80 text-xs font-mono mt-1.5">BE · Computer Science &amp; Engineering</p>
+              <p className="text-slate-600 text-xs font-mono mt-1">2018 – 2021</p>
             </div>
           </motion.div>
+
           <motion.div
-            initial={{ opacity: 0, x: 16 }}
+            initial={{ opacity: 0, x: 24 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="p-6 rounded-xl border border-white/5 bg-slate-900/30"
+            viewport={viewportOnce}
+            transition={{ duration: 0.55, ease: [0.19, 1, 0.22, 1] }}
+            className="cyber-card"
+            style={{ borderRadius: '4px' }}
           >
-            <h3 className="font-display font-bold text-white mb-4 flex items-center gap-2">
-              <span className="text-gold-500 font-mono text-sm">Cert</span>
-              Certifications
-            </h3>
-            <ul className="space-y-2">
+            <div className="flex items-center gap-2 px-5 py-3 border-b border-gold-500/10 bg-gold-500/[0.03]">
+              <span className="status-led-amber" />
+              <span className="font-mono text-xs font-bold text-gold-400/70 tracking-widest uppercase">Certifications</span>
+            </div>
+            <ul className="p-5 space-y-2.5">
               {['Linguaskill (Cambridge English)', 'Data Mining', 'OAuth 2.0 – Nuts and Bolts'].map((cert) => (
-                <li key={cert} className="text-slate-400 text-sm flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gold-500" />
+                <motion.li
+                  key={cert}
+                  initial={{ opacity: 0, x: 10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={viewportOnce}
+                  className="flex items-center gap-2.5 text-slate-400 text-sm font-mono"
+                >
+                  <span className="text-electric-blue-500/50 text-xs">›</span>
                   {cert}
-                </li>
+                </motion.li>
               ))}
             </ul>
           </motion.div>

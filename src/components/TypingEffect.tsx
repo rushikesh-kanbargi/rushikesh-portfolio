@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 
 const phrases = [
-  'I build things for the web.',
-  'I ship products that scale.',
-  'I craft clean, maintainable code.',
-  'From idea to production.',
+  'I build React & TypeScript applications.',
+  'I architect OAuth 2.0 / OIDC systems.',
+  'I develop cybersecurity tooling.',
+  'From architecture to production.',
   'Full-stack · Security · Design systems.',
 ];
 
@@ -78,10 +78,11 @@ export default function TypingEffect() {
   }, []);
 
   return (
-    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-slate-400 tracking-tight mb-6 min-h-[1.2em]">
+    <h2 className="text-xl sm:text-2xl md:text-3xl font-mono font-semibold text-slate-300 tracking-tight mb-6 min-h-[1.4em]">
+      <span className="text-electric-blue-500/50 mr-2">&gt;</span>
       {display}
       <span
-        className={`inline-block w-0.5 h-[0.9em] ml-0.5 align-middle bg-electric-blue-500 ${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity duration-75`}
+        className={`inline-block w-0.5 h-[0.85em] ml-0.5 align-middle bg-electric-blue-400 ${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity duration-75`}
         aria-hidden
       />
     </h2>

@@ -1,0 +1,93 @@
+# Rushikesh Kanbargi — Senior SDE & Full-Stack Architect
+
+> Rushikesh Kanbargi is a Senior Software Development Engineer and Full-Stack Architect
+> specializing in React, cybersecurity tooling, design systems, and OAuth 2.0/OIDC authentication.
+> He is currently employed at Vayavya Labs Pvt. Ltd., an embedded software and automotive
+> cybersecurity company headquartered in India. He has 5+ years of experience building
+> high-performance web applications, from scalable backends to polished UIs.
+
+## Identity
+
+- Full name: Rushikesh Kanbargi
+- Role: Senior Software Development Engineer / Full-Stack Architect
+- Current employer: Vayavya Labs Pvt. Ltd.
+- Location: Belgaum, India
+- Email: rushikesh.kanbargi@protonmail.com
+- Phone: +91 9945773107
+- Portfolio: https://rushikesh-portfolio-delta.vercel.app/
+- GitHub: https://github.com/rushikesh-kanbargi
+- LinkedIn: https://www.linkedin.com/in/rushikesh-kanbargi
+
+## Core Technical Skills
+
+Frontend: React, TypeScript, JavaScript (ES2022+), Next.js, Tailwind CSS, GSAP, Framer Motion, React Flow, Three.js
+Backend: Node.js, Python, PHP, REST APIs, Kafka
+Cloud & DevOps: AWS, Docker, Kubernetes, CI/CD, Cloudflare Workers
+Databases: PostgreSQL, MongoDB, Firebase
+Security: OAuth 2.0, OpenID Connect (OIDC), SSO, MFA, CIAM, ISO 27001 certified environment
+Tools: Git, Vite, Spline, Gemini AI API
+
+## Professional Experience
+
+Rushikesh Kanbargi has held software engineering roles at multiple companies over 5+ years.
+
+**Vayavya Labs Pvt. Ltd.** — Senior Software Engineer (Oct 2024 – Present)
+Designing and developing a web-based Threat Analysis & Risk Assessment (TARA) tool for ISO 21434-compliant automotive cybersecurity. Building interactive React Flow dashboards, AI-powered backend APIs, programmatic PDF exports, and Stripe payment integration.
+
+**Space Matrix** — Senior Software Engineer (May 2024 – Oct 2024)
+Spearheaded digital transformation and automated key financial and procurement processes, achieving 80% process improvement. Owned technology development across multiple stacks and PaaS platforms.
+
+**Space Matrix** — Software Engineer (Nov 2023 – Apr 2024)
+Led redesign and refactoring of the company's official website with multi-language accessibility support. Integrated GSAP and Framer Motion for enhanced user engagement.
+
+**Widas Concepts India Private Limited** — Software Developer (Oct 2021 – Nov 2023)
+Enhanced Cidaas (Cloud Identity and Access Management) with OAuth 2.0, OpenID Connect, SSO, MFA, and consent management workflows. Created Stoplight API documentation. ISO 27001 certified environment.
+
+**Widas Concepts India Private Limited** — IoT Intern (Jul 2021 – Sep 2021)
+Worked with REST, Kafka, and Docker. Contributed to CIAM with OAuth 2.0 and OpenID Connect.
+
+**Tech Fortune Technologies** — Internship Trainee (Jul 2020 – Sep 2020)
+Python and ML basics; delivered a small-scale ML project.
+
+**Computronics Belgaum** — Web Development Intern (Nov 2017 – Apr 2018)
+Developed PHP-based web applications for clients.
+
+## Selected Projects
+
+**TARA — Threat Analysis & Risk Assessment Tool**
+Web-based cybersecurity tool for vulnerability assessment, attack path modeling, and ISO 21434-compliant risk scoring. Built with React, React Flow, and Node.js at Vayavya Labs.
+
+**Cidaas IAM Solution**
+Cloud Identity & Access Management platform with OAuth 2.0, OpenID Connect, SSO, and MFA. Built with Angular.
+
+**AI-Powered PPT Builder**
+AI-driven tool that scans internal drives and auto-generates consolidated presentations from multiple PowerPoint files. Placed 2nd in company hackathon. Built with Python, React, and AI APIs.
+
+**Sign Language Interpreter**
+Real-time sign language detection model for communication between deaf and hearing users, with audio API for speech conversion. Built with Python, OpenCV, and Machine Learning.
+
+## Education
+
+- BE, Computer Science & Engineering
+- Linguaskill (Cambridge English) — Language proficiency certification
+
+## Developer Tools Suite
+
+Rushikesh has built a suite of free developer tools available at:
+https://rushikesh-portfolio-delta.vercel.app/tools
+
+Tools include: JSON Formatter, Regex Tester, Markdown Editor, Code Snippets Manager, Image Optimizer, API Client, Diff Checker, System Design tool, Cover Letter Generator, Job Tracker, Mock Interview Practice, Pomodoro Timer, Task Manager, Note Taker, Habit Tracker, Tech Blog, Ask My AI (Gemini-powered).
+
+Also available: AI-powered Resume Builder at https://rushikesh-portfolio-delta.vercel.app/resume-builder
+
+## Pages
+
+- [Portfolio](https://rushikesh-portfolio-delta.vercel.app/): About, skills, experience, projects, contact
+- [Developer Tools](https://rushikesh-portfolio-delta.vercel.app/tools): Full developer tools suite
+- [Resume Builder](https://rushikesh-portfolio-delta.vercel.app/resume-builder): AI-powered resume builder
+
+## About This File
+
+This llms.txt file follows the llms.txt convention (https://llmstxt.org/) and provides
+a plain-text summary of this portfolio for AI language models and search agents.
+Last updated: March 2026.

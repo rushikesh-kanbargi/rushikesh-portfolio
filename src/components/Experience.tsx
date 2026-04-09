@@ -1,94 +1,213 @@
 import { motion } from 'framer-motion';
-import { viewportOnce } from '../lib/motion';
+import { viewportOnce, staggerContainer, staggerItem, slideRight, drawLine } from '../lib/motion';
+import { GridBackground } from '@/components/ui/grid-background';
+import { Meteors } from '@/components/ui/meteors';
 
 const experiences = [
   {
     role: 'Senior Software Engineer',
     company: 'Vayavya Labs Pvt. Ltd.',
     period: 'Oct 2024 – Present',
-    description: 'Designed and developed a web-based Threat Analysis & Risk Assessment (TARA) tool. Built interactive React Flow dashboards and integrated AI-powered backend APIs. Implemented programmatic PDF exports and Stripe payment integration.',
+    duration: '< 1 yr',
+    description: 'Designing and developing TARA — a web-based Threat Analysis & Risk Assessment tool for ISO 21434-compliant automotive cybersecurity, covering vulnerability assessment, attack path modeling, and risk scoring. Built interactive React Flow dashboards for visual threat modeling. Integrated AI-powered APIs (Gemini), implemented programmatic PDF exports, and shipped Stripe payment integration for subscription management.',
+    tags: ['React Flow', 'Node.js', 'Gemini AI', 'Stripe', 'TypeScript'],
+    status: 'ACTIVE',
   },
   {
     role: 'Senior Software Engineer',
     company: 'Space Matrix',
     period: 'May 2024 – Oct 2024',
-    description: 'Spearheaded digital transformation, automating key financial and procurement processes (80% improvement). Owned technology development and delivery across multiple stacks and PaaS platforms.',
+    duration: '6 mos',
+    description: 'Spearheaded company-wide digital transformation by automating key financial and procurement workflows, achieving an 80% reduction in manual processing time. Owned end-to-end technology development across multiple stacks and PaaS platforms, coordinating cross-functional teams and defining technical architecture for scalable enterprise applications.',
+    tags: ['Enterprise', 'Automation', 'PaaS', 'Architecture'],
+    status: 'COMPLETE',
   },
   {
     role: 'Software Engineer',
     company: 'Space Matrix',
     period: 'Nov 2023 – Apr 2024',
-    description: "Led redesign and refactoring of the company's official website with multi-language accessibility. Integrated GSAP and Framer Motion for engagement.",
+    duration: '6 mos',
+    description: "Led the complete redesign and refactoring of Space Matrix's official website, implementing multi-language accessibility (i18n) for global clients. Integrated GSAP and Framer Motion for enhanced UI animations and micro-interactions, improving user engagement. Managed cross-browser compatibility and frontend performance throughout.",
+    tags: ['React', 'GSAP', 'Framer Motion', 'i18n'],
+    status: 'COMPLETE',
   },
   {
     role: 'Software Developer',
     company: 'Widas Concepts India Private Limited',
     period: 'Oct 2021 – Nov 2023',
-    description: 'Enhanced Cidaas (CIAM) with OAuth 2.0/OIDC, SSO, MFA, and consent management. Created Stoplight API docs and educational video content.',
+    duration: '2 yrs',
+    description: 'Built and maintained Cidaas — a cloud-native Identity & Access Management (CIAM) platform — implementing OAuth 2.0, OpenID Connect (OIDC), SSO, MFA, and consent management for enterprise clients. Created comprehensive Stoplight API documentation and developer onboarding content. Operated in an ISO 27001 certified security environment.',
+    tags: ['OAuth 2.0', 'OIDC', 'SSO', 'MFA', 'Angular'],
+    status: 'COMPLETE',
   },
   {
     role: 'IoT Intern',
     company: 'Widas Concepts India Private Limited',
     period: 'Jul 2021 – Sep 2021',
-    description: 'REST, Kafka, Docker; contributed to CIAM with OAuth 2.0, OpenID Connect (ISO27001 certified).',
+    duration: '3 mos',
+    description: 'Built REST APIs and worked with Kafka message queues and Docker containerization. Contributed to CIAM identity features with OAuth 2.0 and OpenID Connect in an ISO 27001 certified environment.',
+    tags: ['Kafka', 'Docker', 'REST', 'OAuth 2.0'],
+    status: 'COMPLETE',
   },
   {
     role: 'Internship Trainee',
     company: 'Tech Fortune Technologies',
     period: 'Jul 2020 – Sep 2020',
-    description: 'Python and ML basics; delivered a small-scale ML project.',
+    duration: '3 mos',
+    description: 'Learned Python fundamentals and applied machine learning concepts to deliver a small-scale classification project.',
+    tags: ['Python', 'Machine Learning'],
+    status: 'COMPLETE',
   },
   {
     role: 'Web Development Intern',
     company: 'Computronics Belgaum',
     period: 'Nov 2017 – Apr 2018',
-    description: 'Developed PHP-based web applications for clients.',
+    duration: '6 mos',
+    description: 'Developed PHP-based web applications for client projects, gaining hands-on experience with server-side scripting, HTML/CSS, and database-driven web development.',
+    tags: ['PHP', 'HTML/CSS', 'MySQL'],
+    status: 'COMPLETE',
   },
 ];
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-24 md:py-32 relative z-10">
-      <div className="content-max">
+    <section id="experience" className="py-28 md:py-36 relative z-10 overflow-hidden">
+      <GridBackground className="opacity-25" cellSize="40px" />
+      <Meteors count={7} className="opacity-40" />
+      <div className="content-max relative">
+
+        {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial="hidden"
+          whileInView="visible"
           viewport={viewportOnce}
-          transition={{ duration: 0.4 }}
-          className="grid md:grid-cols-[auto_1fr] gap-12 md:gap-20 mb-16"
+          variants={staggerContainer}
+          className="grid md:grid-cols-[260px_1fr] gap-8 md:gap-24 mb-16"
         >
-          <h2 className="section-heading font-mono text-lg md:text-xl">
-            <span className="text-white/40 font-sans font-normal mr-2">03.</span>
-            Professional <span className="text-gradient-gold">Journey</span>
-          </h2>
-          <p className="text-slate-400 text-lg max-w-2xl">
-            Where I've worked and what I shipped.
-          </p>
+          <motion.div variants={slideRight} className="shrink-0">
+            <p className="terminal-label mb-3">MODULE_03</p>
+            <h2
+              className="font-display font-black leading-none tracking-tighter"
+              style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
+            >
+              <span className="text-white/20 font-mono font-normal text-base block mb-1">03.</span>
+              Professional{' '}
+              <span className="text-gradient-gold">Journey</span>
+            </h2>
+            <div className="mt-6 w-px h-24 bg-gradient-to-b from-gold-500/40 to-transparent" />
+          </motion.div>
+          <motion.div variants={staggerItem} className="self-end">
+            <p className="text-slate-400 text-lg leading-relaxed max-w-lg">
+              Where I've worked and what I shipped.
+            </p>
+          </motion.div>
         </motion.div>
 
-        <div className="relative pl-0 md:pl-2">
-          <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-gold-500/40 via-electric-blue-500/50 to-transparent rounded-full" />
-          <ul className="space-y-6">
-            {experiences.map((exp, index) => (
-              <motion.li
-                key={index}
-                initial={{ opacity: 0, x: -16 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={viewportOnce}
-                transition={{ delay: index * 0.04, duration: 0.35 }}
-                className="relative pl-8 md:pl-10 group"
-              >
-                <span className="absolute left-0 top-6 w-3 h-3 rounded-full bg-electric-blue-500 border-2 border-slate-900 -translate-x-[7px] group-hover:bg-electric-blue-400 group-hover:shadow-[0_0_16px_rgba(0,215,230,0.9)] transition-all z-10" />
-                <div className="rounded-2xl border border-white/10 bg-slate-900/50 p-6 md:p-7 hover:border-gold-500/20 hover:bg-slate-800/40 transition-colors">
-                  <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
-                    <h3 className="font-display font-bold text-white text-lg">{exp.role}</h3>
-                    <span className="text-sm font-mono text-gold-400/90">{exp.period}</span>
+        {/* Timeline */}
+        <div className="relative">
+          {/* Animated vertical guide line */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.05 }}
+            variants={drawLine}
+            className="absolute left-[7px] top-2 bottom-2 w-px"
+            style={{
+              background: 'linear-gradient(to bottom, rgba(0,243,255,0.5), rgba(0,243,255,0.15) 60%, transparent)',
+            }}
+          />
+
+          <ul className="space-y-4 pl-0">
+            {experiences.map((exp, i) => {
+              const isActive = exp.status === 'ACTIVE';
+              return (
+                <motion.li
+                  key={i}
+                  initial={{ opacity: 0, x: -24 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={viewportOnce}
+                  transition={{ delay: i * 0.06, duration: 0.55, ease: [0.19, 1, 0.22, 1] }}
+                  className="relative pl-10 group"
+                >
+                  {/* Timeline node */}
+                  <div className="absolute left-0 top-5 flex items-center justify-center w-[15px] h-[15px]">
+                    {isActive ? (
+                      <>
+                        <span className="status-led absolute" style={{ width: '7px', height: '7px' }} />
+                        <span
+                          className="absolute w-[15px] h-[15px] rounded-full animate-ping"
+                          style={{ background: 'rgba(0,243,255,0.15)' }}
+                        />
+                      </>
+                    ) : (
+                      <span className="w-2 h-2 rounded-full border border-electric-blue-500/40 bg-slate-950 group-hover:border-electric-blue-400/70 group-hover:bg-electric-blue-500/10 transition-all duration-300" />
+                    )}
                   </div>
-                  <p className="text-gold-400/90 font-medium text-sm mb-3">{exp.company}</p>
-                  <p className="text-slate-400 text-sm leading-relaxed max-w-2xl">{exp.description}</p>
-                </div>
-              </motion.li>
-            ))}
+
+                  {/* Card */}
+                  <motion.div
+                    whileHover={{ x: 4 }}
+                    transition={{ duration: 0.2 }}
+                    className="cyber-card overflow-hidden"
+                    style={{ borderRadius: '4px' }}
+                  >
+                    {/* Card header */}
+                    <div
+                      className={`flex items-center gap-3 px-5 py-3 border-b border-white/5 flex-wrap ${isActive ? 'bg-electric-blue-500/[0.04]' : 'bg-white/[0.015]'}`}
+                    >
+                      <div className="flex items-center gap-2 flex-1 min-w-0">
+                        {isActive && (
+                          <span className="status-led flex-shrink-0" style={{ width: '6px', height: '6px' }} />
+                        )}
+                        <h3 className="font-mono font-bold text-white text-sm truncate">{exp.role}</h3>
+                      </div>
+                      <div className="flex items-center gap-2 flex-shrink-0 flex-wrap justify-end">
+                        {isActive && (
+                          <span
+                            className="font-mono text-[9px] px-1.5 py-0.5 tracking-widest"
+                            style={{
+                              border: '1px solid rgba(0,255,65,0.35)',
+                              color: 'rgba(0,255,65,0.7)',
+                              background: 'rgba(0,255,65,0.05)',
+                            }}
+                          >
+                            ACTIVE
+                          </span>
+                        )}
+                        <span
+                          className="font-mono text-[9px] px-1.5 py-0.5 tracking-widest"
+                          style={{
+                            border: '1px solid rgba(0,243,255,0.15)',
+                            color: 'rgba(0,243,255,0.35)',
+                            background: 'rgba(0,243,255,0.03)',
+                          }}
+                        >
+                          {exp.duration}
+                        </span>
+                        <span className="text-gold-400/60 text-xs font-mono hidden sm:inline">{exp.period}</span>
+                      </div>
+                    </div>
+
+                    <div className="px-5 py-4">
+                      <p className="text-electric-blue-400/70 text-xs font-mono mb-2.5">&gt; {exp.company}</p>
+                      <p className="text-slate-400 text-sm leading-relaxed mb-3">{exp.description}</p>
+                      {/* Tech tags */}
+                      <div className="flex flex-wrap gap-1.5">
+                        {exp.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-2 py-0.5 text-[10px] font-mono text-electric-blue-400/50 border border-electric-blue-500/15 bg-electric-blue-500/5"
+                            style={{ clipPath: 'polygon(0 0, calc(100% - 3px) 0, 100% 3px, 100% 100%, 3px 100%, 0 calc(100% - 3px))' }}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                </motion.li>
+              );
+            })}
           </ul>
         </div>
       </div>

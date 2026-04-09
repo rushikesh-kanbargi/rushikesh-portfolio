@@ -109,9 +109,8 @@ export const Blog: React.FC = () => {
 
   if (selectedPost) {
     return (
-      <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
-        <div className="max-w-3xl mx-auto">
-          <button
+      <div className="max-w-3xl mx-auto">
+        <button
             onClick={() => setSelectedPost(null)}
             className="flex items-center text-slate-600 hover:text-indigo-600 mb-8 transition-colors group"
           >
@@ -145,19 +144,17 @@ export const Blog: React.FC = () => {
               </div>
             </div>
           </article>
-        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
+    <div>
+      {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
           <div className="flex items-center gap-4">
-            <Link to="/tools" className="p-2 hover:bg-slate-200 rounded-full transition-colors text-slate-600">
-              <ArrowLeft size={24} />
+            <Link to="/tools" className="p-2 hover:bg-slate-200 rounded-lg transition-colors text-slate-600">
+              <ArrowLeft size={20} />
             </Link>
             <div className="flex items-center gap-3">
               <div className="p-2 bg-indigo-600 rounded-lg text-white shadow-md">
@@ -261,7 +258,6 @@ export const Blog: React.FC = () => {
             <p className="text-slate-500">Try adjusting your search or category filter</p>
           </div>
         )}
-      </div>
     </div>
   );
 };

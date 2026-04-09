@@ -244,13 +244,12 @@ export const MockInterview: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
-      <div className="max-w-4xl mx-auto h-[calc(100vh-140px)] flex flex-col">
-        {/* Header */}
+    <div className="h-[calc(100vh-120px)] flex flex-col">
+      {/* Header */}
         <div className="flex items-center justify-between mb-6 shrink-0">
           <div className="flex items-center gap-4">
-            <Link to="/tools" className="p-2 hover:bg-slate-200 rounded-full transition-colors text-slate-600">
-              <ArrowLeft size={24} />
+            <Link to="/tools" className="p-2 hover:bg-slate-200 rounded-lg transition-colors text-slate-600">
+              <ArrowLeft size={20} />
             </Link>
             <div className="flex items-center gap-3">
               <div className="p-2 bg-pink-500 rounded-lg text-white shadow-md">
@@ -453,7 +452,6 @@ export const MockInterview: React.FC = () => {
               </form>
             </>
           )}
-        </div>
       </div>
     </div>
   );

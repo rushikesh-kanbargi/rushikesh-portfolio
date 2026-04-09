@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Portfolio Homepage — primary SEO target -->
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+
+  <!-- Developer Tools Hub -->
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/tools</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/tools/catalog</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+
+  <!-- Developer Tools -->
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/tools/json-formatter</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/tools/regex-tester</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/tools/markdown-editor</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/tools/code-snippets</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/tools/image-optimizer</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/tools/api-client</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/tools/diff-checker</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/tools/system-design</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+
+  <!-- Career Tools -->
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/tools/cover-letter</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/tools/job-tracker</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/tools/mock-interview</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+
+  <!-- Productivity Tools -->
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/tools/pomodoro</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/tools/task-manager</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/tools/note-taker</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/tools/habit-tracker</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+
+  <!-- Content & AI -->
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/tools/blog</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/tools/ask-ai</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+
+  <!-- Resume Builder — public landing and legal -->
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/resume-builder</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/resume-builder/privacy</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+  <url>
+    <loc>https://rushikesh-portfolio-delta.vercel.app/resume-builder/terms</loc>
+    <lastmod>2026-03-31</lastmod>
+  </url>
+
+</urlset>

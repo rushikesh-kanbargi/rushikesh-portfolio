@@ -107,9 +107,7 @@ export const CodeSnippets: React.FC = () => {
   };
 
   const handleDelete = (id: string) => {
-    if (confirm('Are you sure you want to delete this snippet?')) {
-      setSnippets(prev => prev.filter(s => s.id !== id));
-    }
+    setSnippets(prev => prev.filter(s => s.id !== id));
   };
 
   const handleEdit = (snippet: Snippet) => {
@@ -158,19 +156,18 @@ export const CodeSnippets: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
-      <div className="max-w-7xl mx-auto">
+    <div className="space-y-6">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
-          <div className="flex items-center gap-4">
-            <Link to="/tools" className="p-2 hover:bg-slate-200 rounded-full transition-colors text-slate-600">
-              <ArrowLeft size={24} />
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <Link to="/tools" className="p-2 hover:bg-slate-200 rounded-lg transition-colors text-slate-600">
+              <ArrowLeft size={20} />
             </Link>
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-green-500 rounded-lg text-white shadow-md">
-                <Code2 size={24} />
+              <div className="p-2 bg-violet-600 rounded-lg text-white shadow-sm">
+                <Code2 size={20} />
               </div>
-              <h1 className="text-2xl font-bold text-slate-900">Code Snippets</h1>
+              <h1 className="text-xl font-bold text-slate-900">Code Snippets</h1>
             </div>
           </div>
 
@@ -283,7 +280,6 @@ export const CodeSnippets: React.FC = () => {
             No snippets found matching your search.
           </div>
         )}
-      </div>
 
       {/* Modal */}
       {isModalOpen && (

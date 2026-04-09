@@ -47,10 +47,8 @@ export const NoteTaker: React.FC = () => {
 
   const deleteNote = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    if (confirm('Are you sure you want to delete this note?')) {
-      setNotes(prev => prev.filter(n => n.id !== id));
-      if (activeNoteId === id) setActiveNoteId(null);
-    }
+    setNotes(prev => prev.filter(n => n.id !== id));
+    if (activeNoteId === id) setActiveNoteId(null);
   };
 
   const filteredNotes = notes.filter(n => 
@@ -59,19 +57,18 @@ export const NoteTaker: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
-      <div className="max-w-6xl mx-auto h-[calc(100vh-140px)] flex flex-col">
+    <div className="flex flex-col" style={{ height: 'calc(100vh - 120px)' }}>
         {/* Header */}
-        <div className="flex items-center justify-between mb-6 shrink-0">
-          <div className="flex items-center gap-4">
-            <Link to="/tools" className="p-2 hover:bg-slate-200 rounded-full transition-colors text-slate-600">
-              <ArrowLeft size={24} />
+        <div className="flex items-center justify-between mb-4 shrink-0">
+          <div className="flex items-center gap-3">
+            <Link to="/tools" className="p-2 hover:bg-slate-200 rounded-lg transition-colors text-slate-600">
+              <ArrowLeft size={20} />
             </Link>
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-amber-500 rounded-lg text-white shadow-md">
-                <FileText size={24} />
+              <div className="p-2 bg-amber-500 rounded-lg text-white shadow-sm">
+                <FileText size={20} />
               </div>
-              <h1 className="text-2xl font-bold text-slate-900">Note Taker</h1>
+              <h1 className="text-xl font-bold text-slate-900">Note Taker</h1>
             </div>
           </div>
         </div>
@@ -190,7 +187,6 @@ export const NoteTaker: React.FC = () => {
             )}
           </div>
         </div>
-      </div>
     </div>
   );
 };

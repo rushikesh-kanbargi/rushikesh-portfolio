@@ -178,14 +178,26 @@ function getReduceMotion(): boolean {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
+function getIsMobile(): boolean {
+  if (typeof window === 'undefined') return false;
+  return window.innerWidth < 768;
+}
+
 export default function GlobalBackground3D({ children }: { children: React.ReactNode }) {
   const [reduceMotion, setReduceMotion] = useState(getReduceMotion);
+  const [isMobile, setIsMobile] = useState(getIsMobile);
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
     const handler = () => setReduceMotion(mq.matches);
     mq.addEventListener('change', handler);
     return () => mq.removeEventListener('change', handler);
+  }, []);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', onResize, { passive: true });
+    return () => window.removeEventListener('resize', onResize);
   }, []);
 
   useEffect(() => {
@@ -211,10 +223,11 @@ export default function GlobalBackground3D({ children }: { children: React.React
       <div className="fixed inset-0 z-0 pointer-events-none bg-slate-950">
         {reduceMotion ? null : (
         <Canvas
+          dpr={[1, isMobile ? 1 : Math.min(window.devicePixelRatio, 2)]}
           gl={{
-            antialias: true,
+            antialias: !isMobile,
             alpha: false,
-            powerPreference: 'high-performance',
+            powerPreference: isMobile ? 'low-power' : 'high-performance',
             toneMapping: THREE.ACESFilmicToneMapping,
             toneMappingExposure: 1,
           }}
@@ -223,14 +236,16 @@ export default function GlobalBackground3D({ children }: { children: React.React
           <pointLight position={[8, 8, 8]} intensity={0.8} distance={80} decay={2} />
           <pointLight position={[-4, -2, 4]} intensity={0.25} color="#3b82f6" distance={50} />
           <Scene />
-          <EffectComposer>
-            <Bloom
-              luminanceThreshold={0.75}
-              luminanceSmoothing={0.95}
-              intensity={0.6}
-              radius={0.25}
-            />
-          </EffectComposer>
+          {!isMobile && (
+            <EffectComposer>
+              <Bloom
+                luminanceThreshold={0.75}
+                luminanceSmoothing={0.95}
+                intensity={0.6}
+                radius={0.25}
+              />
+            </EffectComposer>
+          )}
         </Canvas>
         )}
       </div>

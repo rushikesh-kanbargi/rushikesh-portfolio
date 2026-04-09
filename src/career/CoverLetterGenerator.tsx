@@ -77,17 +77,16 @@ export const CoverLetterGenerator: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+    <div>
+      {/* Header */}
+      <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
-            <Link 
-              to="/tools" 
-              className="p-2 hover:bg-slate-200 rounded-full transition-colors text-slate-600"
+            <Link
+              to="/tools"
+              className="p-2 hover:bg-slate-200 rounded-lg transition-colors text-slate-600"
               aria-label="Back to Tools"
             >
-              <ArrowLeft size={24} />
+              <ArrowLeft size={20} />
             </Link>
             <div className="flex items-center gap-3">
               <div className="p-2 bg-indigo-500 rounded-lg text-white shadow-md">
@@ -157,7 +156,6 @@ export const CoverLetterGenerator: React.FC = () => {
               onUpdate={setGeneratedLetter}
             />
           </div>
-        </div>
       </div>
     </div>
   );

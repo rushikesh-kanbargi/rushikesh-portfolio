@@ -1,0 +1,42 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'>
+  <defs>
+    <linearGradient id='bg' x1='0%' y1='0%' x2='100%' y2='100%'>
+      <stop offset='0%' style='stop-color:#020617'/>
+      <stop offset='50%' style='stop-color:#0f172a'/>
+      <stop offset='100%' style='stop-color:#020617'/>
+    </linearGradient>
+    <linearGradient id='accent' x1='0%' y1='0%' x2='100%' y2='0%'>
+      <stop offset='0%' style='stop-color:#00f3ff'/>
+      <stop offset='100%' style='stop-color:#38bdf8'/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width='1200' height='630' fill='url(#bg)'/>
+  <!-- Grid lines -->
+  <line x1='0' y1='210' x2='1200' y2='210' stroke='rgba(0,243,255,0.05)' stroke-width='1'/>
+  <line x1='0' y1='420' x2='1200' y2='420' stroke='rgba(0,243,255,0.05)' stroke-width='1'/>
+  <line x1='400' y1='0' x2='400' y2='630' stroke='rgba(0,243,255,0.05)' stroke-width='1'/>
+  <line x1='800' y1='0' x2='800' y2='630' stroke='rgba(0,243,255,0.05)' stroke-width='1'/>
+  <!-- Top accent bar -->
+  <rect x='60' y='60' width='120' height='3' fill='url(#accent)' rx='2'/>
+  <!-- RK monogram -->
+  <text x='60' y='200' font-family='system-ui,sans-serif' font-size='100' font-weight='900' fill='url(#accent)' opacity='0.15' letter-spacing='-4'>RK</text>
+  <!-- Name -->
+  <text x='60' y='290' font-family='system-ui,-apple-system,sans-serif' font-size='62' font-weight='900' fill='white' letter-spacing='-2'>Rushikesh Kanbargi</text>
+  <!-- Role -->
+  <text x='60' y='360' font-family='system-ui,-apple-system,sans-serif' font-size='28' font-weight='400' fill='#00f3ff' letter-spacing='0'>Senior SDE &amp; Full-Stack Architect</text>
+  <!-- Divider -->
+  <line x1='60' y1='395' x2='560' y2='395' stroke='rgba(0,243,255,0.25)' stroke-width='1'/>
+  <!-- Skills row -->
+  <text x='60' y='440' font-family='monospace' font-size='18' fill='rgba(148,163,184,0.8)'>React  ·  TypeScript  ·  OAuth 2.0  ·  Cybersecurity  ·  Node.js</text>
+  <!-- Current status -->
+  <circle cx='60' cy='498' r='5' fill='#00ff41'/>
+  <text x='78' y='504' font-family='monospace' font-size='16' fill='rgba(0,255,65,0.8)'>Currently at Vayavya Labs  ·  Belgaum, India  ·  Open to opportunities</text>
+  <!-- Bottom URL -->
+  <text x='60' y='570' font-family='monospace' font-size='16' fill='rgba(0,243,255,0.4)'>rushikesh-portfolio-delta.vercel.app</text>
+  <!-- Right side decoration -->
+  <circle cx='1050' cy='315' r='180' fill='none' stroke='rgba(0,243,255,0.06)' stroke-width='1'/>
+  <circle cx='1050' cy='315' r='130' fill='none' stroke='rgba(0,243,255,0.04)' stroke-width='1'/>
+  <circle cx='1050' cy='315' r='80' fill='none' stroke='rgba(0,243,255,0.08)' stroke-width='1'/>
+  <text x='1050' y='340' font-family='system-ui,sans-serif' font-size='72' font-weight='900' text-anchor='middle' fill='url(#accent)' opacity='0.2'>RK</text>
+</svg>

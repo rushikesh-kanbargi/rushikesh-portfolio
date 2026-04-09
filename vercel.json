@@ -1,0 +1,77 @@
+{
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains; preload"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        },
+        {
+          "key": "X-DNS-Prefetch-Control",
+          "value": "on"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(sitemap\\.xml|robots\\.txt|llms\\.txt|favicon\\.svg|favicon\\.ico|apple-touch-icon\\.png|og-preview\\.png)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=3600"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/((?!sitemap\\.xml|robots\\.txt|llms\\.txt|favicon\\.svg|favicon\\.ico|apple-touch-icon\\.png|og-preview\\.png|assets/.*).*)",
+      "destination": "/index.html"
+    }
+  ],
+  "firewall": {
+    "rules": [
+      {
+        "name": "Allow AI crawlers",
+        "conditionGroup": [
+          {
+            "conditions": [
+              {
+                "op": "re",
+                "neg": false,
+                "type": "user_agent",
+                "value": "(?i)GPTBot|OAI-SearchBot|ClaudeBot|PerplexityBot|anthropic-ai|Applebot-Extended"
+              }
+            ]
+          }
+        ],
+        "action": { "type": "allow" }
+      }
+    ]
+  }
+}
