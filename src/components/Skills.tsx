@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Layout, Server, Smartphone, Terminal } from 'lucide-react';
 import { viewportOnce, staggerContainer, staggerItem, staggerContainerFast, slideRight } from '../lib/motion';
 import { Marquee } from '@/components/ui/marquee';
 import { OrbitingCircles } from '@/components/ui/orbiting-circles';

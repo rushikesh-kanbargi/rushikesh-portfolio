@@ -1,8 +1,32 @@
-import { useRef, useMemo, useEffect, useState } from 'react';
+import { useRef, useMemo, useEffect, useState, Component } from 'react';
+import type { ErrorInfo, ReactNode } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Sparkles, Environment } from '@react-three/drei';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as THREE from 'three';
+
+// ── ERROR BOUNDARY ──────────────────────────────────────────────────────────
+class CanvasErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
+  constructor(props: { children: ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error("WebGL Canvas Error:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <div className="fixed inset-0 bg-slate-950" />; // Fallback to plain background
+    }
+    return this.props.children;
+  }
+}
 
 const scrollRef = { current: 0 };
 
@@ -186,6 +210,22 @@ function getIsMobile(): boolean {
 export default function GlobalBackground3D({ children }: { children: React.ReactNode }) {
   const [reduceMotion, setReduceMotion] = useState(getReduceMotion);
   const [isMobile, setIsMobile] = useState(getIsMobile);
+  const [shouldRender, setShouldRender] = useState(true);
+
+  // Monitor scroll to unmount background during Hero (where Spline is heavy)
+  useEffect(() => {
+    const handleScroll = () => {
+      // Threshold: disable background canvas if we are at the very top (Hero section)
+      // Spline is heavy enough, we don't need the R3F background fighting for context.
+      // Once user scrolls past ~300px, we mount the background for the rest of the page.
+      const isTop = window.scrollY < 300;
+      setShouldRender(!isTop);
+    };
+    
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -201,7 +241,7 @@ export default function GlobalBackground3D({ children }: { children: React.React
   }, []);
 
   useEffect(() => {
-    if (reduceMotion) return;
+    if (reduceMotion || !shouldRender) return;
     let rafId = 0;
     function tick() {
       if (document.visibilityState === 'hidden') {
@@ -216,37 +256,39 @@ export default function GlobalBackground3D({ children }: { children: React.React
     }
     rafId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafId);
-  }, [reduceMotion]);
+  }, [reduceMotion, shouldRender]);
 
   return (
     <div className="relative w-full min-h-screen">
       <div className="fixed inset-0 z-0 pointer-events-none bg-slate-950">
-        {reduceMotion ? null : (
-        <Canvas
-          dpr={[1, isMobile ? 1 : Math.min(window.devicePixelRatio, 2)]}
-          gl={{
-            antialias: !isMobile,
-            alpha: false,
-            powerPreference: isMobile ? 'low-power' : 'high-performance',
-            toneMapping: THREE.ACESFilmicToneMapping,
-            toneMappingExposure: 1,
-          }}
-        >
-          <ambientLight intensity={0.4} />
-          <pointLight position={[8, 8, 8]} intensity={0.8} distance={80} decay={2} />
-          <pointLight position={[-4, -2, 4]} intensity={0.25} color="#3b82f6" distance={50} />
-          <Scene />
-          {!isMobile && (
-            <EffectComposer>
-              <Bloom
-                luminanceThreshold={0.75}
-                luminanceSmoothing={0.95}
-                intensity={0.6}
-                radius={0.25}
-              />
-            </EffectComposer>
-          )}
-        </Canvas>
+        {(reduceMotion || !shouldRender) ? null : (
+        <CanvasErrorBoundary>
+          <Canvas
+            dpr={[1, isMobile ? 1 : Math.min(window.devicePixelRatio, 2)]}
+            gl={{
+              antialias: !isMobile,
+              alpha: false,
+              powerPreference: isMobile ? 'low-power' : 'high-performance',
+              toneMapping: THREE.ACESFilmicToneMapping,
+              toneMappingExposure: 1,
+            }}
+          >
+            <ambientLight intensity={0.4} />
+            <pointLight position={[8, 8, 8]} intensity={0.8} distance={80} decay={2} />
+            <pointLight position={[-4, -2, 4]} intensity={0.25} color="#3b82f6" distance={50} />
+            <Scene />
+            {!isMobile && (
+              <EffectComposer>
+                <Bloom
+                  luminanceThreshold={0.75}
+                  luminanceSmoothing={0.95}
+                  intensity={0.6}
+                  radius={0.25}
+                />
+              </EffectComposer>
+            )}
+          </Canvas>
+        </CanvasErrorBoundary>
         )}
       </div>
       <div className="relative z-10">{children}</div>

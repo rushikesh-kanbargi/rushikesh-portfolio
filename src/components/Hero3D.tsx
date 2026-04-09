@@ -221,8 +221,7 @@ export default function Hero3D() {
             transition={{ delay: 0.65, duration: 0.6 }}
             className="text-slate-400 text-base leading-relaxed max-w-lg mb-7"
           >
-            Senior Software Engineer focused on high-performance web apps, from scalable
-            backends to polished UIs. Currently building cybersecurity tools and design systems.
+            Senior Software Development Engineer engineering scalable, high-performance web applications and enterprise platforms. Specializing in React, complex system architecture, and ISO-compliant cybersecurity tooling.
           </motion.p>
 
           {/* Stat pills */}
