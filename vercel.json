@@ -53,25 +53,5 @@
       "source": "/((?!sitemap\\.xml|robots\\.txt|llms\\.txt|favicon\\.svg|favicon\\.ico|apple-touch-icon\\.png|og-preview\\.png|assets/.*).*)",
       "destination": "/index.html"
     }
-  ],
-  "firewall": {
-    "rules": [
-      {
-        "name": "Allow AI crawlers",
-        "conditionGroup": [
-          {
-            "conditions": [
-              {
-                "op": "re",
-                "neg": false,
-                "type": "user_agent",
-                "value": "(?i)GPTBot|OAI-SearchBot|ClaudeBot|PerplexityBot|anthropic-ai|Applebot-Extended"
-              }
-            ]
-          }
-        ],
-        "action": { "type": "allow" }
-      }
-    ]
-  }
+  ]
 }
